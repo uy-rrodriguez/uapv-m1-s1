@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Liste d'exercices</h1>
+    <h1>TP1 - Liste d'exercices</h1>
     <ul>
 <%
     for (int i = 1; i <= 7; i++) {

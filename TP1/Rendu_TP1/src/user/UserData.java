@@ -1,6 +1,6 @@
 package user;
 
-class UserData {
+public class UserData {
     private String nom;
     private int age;
     private String email;

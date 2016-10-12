@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TP2 - Ex 1 - Applet</title>
+</head>
+
+<body>
+    <!--
+        1 – Ecrire une classe applet Affiche (classe qui hérite de Applet) dont la méthode Paint affiche deux
+            chaînes : "Début de l’applet" et "Fin de l’applet". La méthode init ne fait rien.
+            Ecrire ensuite un fichier index.html qui utilise l’applet (avec avant et après deux messages
+            quelconques). Pour cela (C1 transparents 25 et 26) on utilise la balise APPLET avec son attribut
+            code : <APPLET CODE="MonApplet.class" WIDTH="800" HEIGHT="300">
+            On peut tester avec appletviewer dans un premier temps.
+            Puis déployer comme un composant web, en plaçant le fichier html, la classe compilée à la racine
+            de l’archive et enfin le répertoire WEB-INF (avec web-inf basique), et y accéder en local à partir
+            d’un navigateur. Essayer ensuite à distance par exemple sous une session Windows.
+            Changer ensuite une des chaînes dans l’applet puis la recharger : vous pouvez avoir besoin de faire
+            afficher la console Java pour nettoyer le chargeur de classes (ou fermer totalement le navigateur).
+    -->
+
+    <h3>
+        Test d'un Applet
+    </h3>
+
+    <applet code="Affiche.class" width="800" height="300">
+        Applet Java de test.
+    </applet>
+
+    <h3>
+        Fin de Test d'un Applet
+    </h3>
+
+</body>
+</html>

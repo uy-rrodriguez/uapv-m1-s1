@@ -1,5 +1,5 @@
-PROJET = Rendu_TP1
-CLASSES = src/user/UserData.java
+PROJET = Rendu_TP2
+CLASSES = src/Affiche.java
 
 
 all: compile package redeploy
@@ -7,7 +7,7 @@ all: compile package redeploy
 compile:
 	@echo Compilation des classes Java
 	@echo ----------------------------
-	javac -d WEB-INF/classes $(CLASSES)
+	javac -d . $(CLASSES)
 	@echo
 
 package:

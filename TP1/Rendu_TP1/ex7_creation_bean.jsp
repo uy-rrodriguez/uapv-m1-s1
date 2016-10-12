@@ -3,10 +3,14 @@
 
 <jsp:useBean id="utilisateur" class="user.UserData" scope="session"></jsp:useBean>
 
+<jsp:setProperty name="utilisateur" property="*" />
+
 <%
+    /*
     utilisateur.setNom(request.getParameter("nom"));
     utilisateur.setAge(Integer.parseInt(request.getParameter("age")));
     utilisateur.setEmail(request.getParameter("email"));
+    */
 %>
 
 <!DOCTYPE html>
@@ -16,7 +20,9 @@
 </head>
 
 <body>
-    <a href="ex7_affichage_bean.jsp">Cliquez ici pour afficher l'utilisateur.</a>
+    <h3>Les données ont été stockées dans le Bean</h3>
+    <br />
+    <a href="ex7_affichage_bean.jsp">Afficher l'utilisateur</a>
 </body>
 </html>
 

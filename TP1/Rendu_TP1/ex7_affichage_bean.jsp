@@ -30,7 +30,7 @@
     <br />
     <br />
 
-    <a href="ex7_afficher_bean.jsp">Cliquez ici pour afficher l'utilisateur.</a>
+    <a href="ex7.jsp">Retour au formulaire</a>
 </body>
 </html>
 
