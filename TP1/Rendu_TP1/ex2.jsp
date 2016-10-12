@@ -5,6 +5,14 @@
 <%@ page import="java.net.*" %>
 <%@ page import="java.io.*" %>
 
+<%
+    /*
+     *   2 – Ecrire une page JSP qui commence par identifier un nom passé en paramètre de l’URL, puis qui
+     *       affiche le jour de la semaine correspondant à la date du serveur, ainsi que toutes les propriétés du
+     *       système (System.getProperties()).
+     */
+%>
+
 <html>
 <head>
     <title>Ex2 - Params URL et données serveur</title>
@@ -13,12 +21,6 @@
 <body>
 
 <%
-    /*
-        2 – Ecrire une page JSP qui commence par identifier un nom passé en paramètre de l’URL, puis qui
-        affiche le jour de la semaine correspondant à la date du serveur, ainsi que toutes les propriétés du
-        système (System.getProperties()).
-    */
-
     String param = request.getParameter("nom");
 
     Date now = new Date();
@@ -32,7 +34,10 @@
 %>
     <table>
         <tr>
-            <th>Paramètre par GET</th>
+            <th>
+                Paramètre par GET <br />
+                (j'attends le paramètre "nom")
+            </th>
             <td><%= param %></td>
         </tr>
         <tr>

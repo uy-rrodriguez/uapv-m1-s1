@@ -10,8 +10,8 @@
 
 <%
     /*
-        3 – Afficher l'adresse IP de la machine cliente. (getRemoteAddr et getRemoteHost)
-    */
+     *   3 – Afficher l'adresse IP de la machine cliente. (getRemoteAddr et getRemoteHost)
+     */
 
     String ipClient = request.getRemoteAddr();
     String hostClient = request.getRemoteHost();
