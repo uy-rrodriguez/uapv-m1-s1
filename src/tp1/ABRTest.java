@@ -167,7 +167,6 @@ public class ABRTest {
 
 	}
 
-	/*
 	@Test
 	public void fusion(){
 
@@ -188,5 +187,4 @@ public class ABRTest {
 		assertEquals("1, 2, 3, 4, 5, 8, ", a1.toString());
 
 	}
-    */
 }

@@ -382,7 +382,7 @@ class ABR<T> {
             Définition L’ABR C est dit fusion des arbres A et B si et seulement si U contient tous les noeuds de A et
             tous ceux de B.
 
-            Ecrire une procédure fusionnant deux arbres, enévitant de recréer un troisième arbre par recopies des
+            Ecrire une procédure fusionnant deux arbres, en évitant de recréer un troisième arbre par recopies des
             données de A et B.
     */
     /* *********************************************************************** */
@@ -428,8 +428,8 @@ class ABR<T> {
         boolean egaux = true;
         
         while (egaux												// Condition d'egalite
-        		&& (! stack_A.isEmpty() || noeud_A != null)			// Tant qu'il n'y a d'elements dans l'arbre 1 
-				&& (! stack_B.isEmpty() || noeud_B != null)) {		// Tant qu'il n'y a d'elements dans l'arbre 2
+        		&& (! stack_A.isEmpty() || noeud_A != null)			// Tant qu'il y a d'elements dans l'arbre A 
+				&& (! stack_B.isEmpty() || noeud_B != null)) {		// Tant qu'il y a d'elements dans l'arbre B
         	
 	        // Iteration jusqu'au plus petit
 	        if (noeud_A != null || noeud_B != null) {
@@ -561,6 +561,25 @@ class ABR<T> {
         // Sinon, on retourne la derniere valeur stockee dans "egaux".
         return (resultat.stackVide_A && resultat.noeudNull_A
         		&& resultat.egaux);
+    }
+    
+    
+    public void fusion(ABR<T> autre) {
+    	Stack<ABR> stack_B = new Stack<ABR>();
+        ABR noeud_B = autre;
+        
+        // Iteration Racine-Gauche-Droite
+        while (! stack_B.isEmpty() || noeud_B != null) {	// Tant qu'il y a d'elements dans l'arbre B (autre)
+        	if (noeud_B != null) {
+        		System.out.println("Ajout " + noeud_B.donnee);
+        		this.insertionFeuille(noeud_B.donnee);
+        		
+	            stack_B.push(noeud_B.filsGauche);
+	            stack_B.push(noeud_B.filsDroit);
+	        }
+        	
+        	noeud_B = stack_B.pop();
+        }
     }
 
 
