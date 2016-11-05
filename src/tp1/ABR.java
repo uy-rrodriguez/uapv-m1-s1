@@ -19,51 +19,23 @@ class ABR<T> {
         this.filsDroit  = null;
     }
 
-
-    /*
-        Methode auxiliare pour connaitre si un arbre est vide.
-        Un arbre sera vide si la racine etait le seul noeud et elle a ete supprime.
-        Dans ce cas, la donnee sera null.
-    */
+    /**
+     * Methode auxiliare pour connaitre si un arbre est vide.
+     * Un arbre sera vide si la racine etait le seul noeud et elle a ete supprime.
+     * Dans ce cas, la donnee sera null.
+     * 
+     * @return
+     */
     private boolean isEmpty() {
         return (this.donnee == null);
     }
 
-
-    /*
-        insertionFeuille(d) : insère un nouveau noeud contenant une donnée d en feuille de l’arbre ;
-    */
+    /**
+     * Insère un nouveau noeud contenant une donnée d en feuille de l’arbre ;
+     * 
+     * @param d
+     */
     public void insertionFeuille(DonneeGenerique d) {
-        /* *** Methode recursive *** */
-        /*
-            int comparation = this.donnee.compareTo(d);
-
-            // Cas nouvelle donnee plus petite
-            if (comparation > 0) {
-                if (filsGauche == null) {
-                    filsGauche = new ABR<T>(d);
-                    filsGauche.pere = this;
-                }
-                else {
-                    filsGauche.insertionFeuille(d);
-                }
-            }
-
-            // Cas nouvelle donnee plus grande
-            else if (comparation < 0) {
-                if (filsDroit == null) {
-                    filsDroit = new ABR<T>(d);
-                    filsDroit.pere = this;
-                }
-                else {
-                    filsDroit.insertionFeuille(d);
-                }
-            }
-
-            // Cas nouvelle donnee egale
-            else {}
-        */
-
         /* *** Methode iterative *** */
         // Cas d'arbre vide
         if (this.isEmpty()) {
@@ -110,26 +82,11 @@ class ABR<T> {
     }
 
 
-    /*
-        toString() : renvoie une chaˆıne de caractères qui contient l’ensemble des données de l’arbre dans l’ordre
-                     lexicographique des clés et séparés par une virgule ;
-    */
+    /**
+     * Renvoie une chaîne de caractères qui contient l’ensemble des données de l’arbre dans l’ordre
+     * lexicographique des clés et séparés par une virgule.
+     */
     public String toString() {
-        /* *** Methode recursive *** */
-        /*
-            String res = donnee + ", ";
-
-            if (filsGauche != null) {
-                res = filsGauche + res;
-            }
-
-            if (filsDroit != null) {
-                res = res + filsDroit;
-            }
-
-            return res;
-        */
-
         /* *** Methode iterative *** */
 
         // On utilise l'aide d'un stack
@@ -161,32 +118,13 @@ class ABR<T> {
         return buff.toString();
     }
 
-
-    /*
-        recherche(String cle) : renvoie la référence de l’objet de clé “cle�? s’il existe, ou “null�? sinon ;\
-    */
+    /**
+     * Renvoie la référence de l’objet de clé "cle" s’il existe, ou "null" sinon.
+     * 
+     * @param cle
+     * @return
+     */
     public ABR<T> recherche(String cle) {
-        /* *** Methode recursive *** */
-        /*
-            int comparation = this.donnee.cle.compareTo(cle);
-
-            if (comparation == 0) {
-                return this;
-            }
-            else if (comparation > 0) {
-                if (filsGauche != null)
-                    return filsGauche.recherche(cle);
-            }
-            else {
-                if (filsDroit != null)
-                    return filsDroit.recherche(cle);
-            }
-
-            // Si on arrive la c'est parce que la cle n'existe pas
-            return null;
-        */
-
-
         /* *** Methode iterative *** */
 
         ABR noeud = this;
@@ -209,20 +147,12 @@ class ABR<T> {
         return null;
     }
 
-
-    /*
-        minimum() : renvoie la référence du noeud contenant l’objet de clé minimale ;
-    */
+    /**
+     * Renvoie la référence du noeud contenant l’objet de clé minimale.
+     * 
+     * @return
+     */
     public ABR<T> minimum() {
-        /* *** Methode recursive *** */
-        /*
-            if (filsGauche == null)
-                return this;
-            else
-                return filsGauche.minimum();
-        */
-
-
         /* *** Methode iterative *** */
 
         ABR noeud = this;
@@ -233,19 +163,12 @@ class ABR<T> {
         return noeud;
     }
 
-    /*
-        maximum() : renvoie la référence du noeud contenant l’objet de clé maximale
-    */
+    /**
+     * Renvoie la référence du noeud contenant l’objet de clé maximale.
+     * 
+     * @return
+     */
     public ABR<T> maximum() {
-        /* *** Methode recursive *** */
-        /*
-            if (filsDroit == null)
-                return this;
-            else
-                return filsDroit.maximum();
-        */
-
-
         /* *** Methode iterative *** */
 
         ABR noeud = this;
@@ -256,9 +179,11 @@ class ABR<T> {
         return noeud;
     }
 
-    /*
-        hauteur() : renvoie la hauteur de l’arbre
-    */
+    /**
+     * Renvoie la hauteur de l’arbre.
+     * 
+     * @return
+     */
     public int hauteur() {
         int hGauche = 0;
         int hDroit = 0;
@@ -277,15 +202,14 @@ class ABR<T> {
 
 
     /*
-        supprimer(cle) : supprime l’objet de clé “cle�? tout en maintenant la structure d’un ABR.
-
-        SUPPRESSION DE LA RACINE :
-            La suppression de la racine represente un probleme particulier.
-            - Si l'arbre a un seul element, on va mettre une valeur null dans la donnee.
-            - Sinon, si par exemple le noeud a supprimer a un fils gauche non null,
-                on va aller chercher le maximum a gauche, on remplacera la donnee du noeud a supprimer par celle
-                du maximum, et puis un supprimera la reference au maximum
+        
     */
+    /**
+     * Méthode auxiliaire pour deplacer un noued.
+     * 
+     * @param actuel
+     * @param remplacement
+     */
     private void deplacer(ABR<T> actuel, ABR<T> remplacement) {
         // Le cas ou il faut remplacer la racine n'est pas pris en compte
         // Cette fonction ne sera jamais appele dans ce cas-la.
@@ -299,6 +223,20 @@ class ABR<T> {
             remplacement.pere = actuel.pere;
     }
 
+    /**
+     * Supprime l’objet de clé "cle" tout en maintenant la structure d’un ABR.
+     * 
+     * <pre>
+     * SUPPRESSION DE LA RACINE :
+     *       La suppression de la racine represente un probleme particulier.
+     *       - Si l'arbre a un seul element, on va mettre une valeur null dans la donnee.
+     *       - Sinon, si par exemple le noeud a supprimer a un fils gauche non null,
+     *           on va aller chercher le maximum a gauche, on remplacera la donnee du noeud a supprimer par celle
+     *           du maximum, et puis un supprimera la reference au maximum
+     * </pre>
+     * 
+     * @param cle
+     */
     public void suppression(String cle) {
         ABR<T> aSupprimer = this.recherche(cle);
 
@@ -307,6 +245,7 @@ class ABR<T> {
         // qui fait appel a la methode de suppression.
         // Du coup, il faut changer les references de fils gauche, fils droit et donnee.
 
+        // Suppression de la racine
         if (this == aSupprimer) {
             if (this.filsGauche == null) {
                 this.donnee = this.filsDroit.donnee;
@@ -333,8 +272,7 @@ class ABR<T> {
         }
 
 
-        // Cas de suppression d'un noeud different a la racine
-
+        // Suppression d'un noeud différent à la racine
         else {
             if (aSupprimer.filsGauche == null) {
                 this.deplacer(aSupprimer, aSupprimer.filsDroit);
@@ -361,31 +299,9 @@ class ABR<T> {
     }
 
 
-    /* *********************************************************************** */
-    /*
-        3 - Implementation methodes avancees
-        Exercice 3 : Arbres equivalents
-            Definition Deux arbres binaires sont équivalents s’ils contiennent les mêmes éléments.
-
-            Ecrire la méthode equivalent(abr) qui renvoie true si l’arbre est équivalent à abr et false sinon.
-            Vous mentionnerez en commentaire de cette méthode les complexités dans le pire et dans le meilleur des
-            cas de l’algorithme que vous proposez.
-
-        Exercice 4 : Arbre contenu dans un autre
-            Définition Un ABR A est contenu dans un ABR B si et seulement si tous les éléments de A sont dans B.
-
-            Ecrire la méthode contenuDans(abr) renvoyant true si l’arbre est contenu dans abr.
-            Vous mentionnerez en commentaire de cette méthode les complexités dans le pire et dans le meilleur des
-            cas de l’algorithme que vous proposez.
-
-        Exercice 5 : Fusion d’arbres
-            Définition L’ABR C est dit fusion des arbres A et B si et seulement si U contient tous les noeuds de A et
-            tous ceux de B.
-
-            Ecrire une procédure fusionnant deux arbres, en évitant de recréer un troisième arbre par recopies des
-            données de A et B.
-    */
-    /* *********************************************************************** */
+    /* ************************************************************************ */
+    /* 		Implémentation méthodes avancées									*/
+    /* ************************************************************************ */
 
     private class ResultatEquivalentContenu {
     	boolean egaux;
@@ -404,12 +320,14 @@ class ABR<T> {
      * Du coup, on retourne un classe avec dse boolean contenant les valeurs finales de chaque
      * variable qui nous interesse.
      * 
+     * <pre>
      * Le resultat final contiendra :
      * 	- egaux > la derniere valeur de la variable egaux
      * 	- stackVide_A > true si le stack pour l'arbre A (this) est vide, false dans le cas contraire
      * 	- stackVide_B > true si le stack pour l'arbre B (autre) est vide, false dans le cas contraire
      * 	- noeudNull_A > true si le dernier noeud recupere de l'arbre A (this) est null, false dans le cas contraire
      * 	- noeudNull_B > true si le dernier noeud recupere de l'arbre B (autre) est null, false dans le cas contraire
+     * </pre>
      * 
      * Toutes ces valeurs seront utilisees par equivalent et contenu.
      * 
@@ -451,7 +369,6 @@ class ABR<T> {
 		        noeud_B = stack_B.pop();
 		        
 		        egaux = (noeud_A.donnee.compareTo(noeud_B.donnee) == 0);
-		        // System.out.println("Comparaison : A = " + noeud_A.donnee + "; B = " + noeud_B.donnee);
 		        
 		        // Puis on passe a la droite du plus petit et on retourne a la boucle
 		        noeud_A = noeud_A.filsDroit;
@@ -468,18 +385,15 @@ class ABR<T> {
         return resultat;
     }
     
-    public boolean equivalent(ABR<T> autre) {
-        // Methode bete : utiliser toString
-    	// --------------------------------
-    	// Complexite O(3n) dans le pire des cas :
-    	//		> On parcourt les deux arbres, ca fait 2*O(n), puis on parcourt les strings une fois pour les comparer.
-    	//
-    	// Complexite O(2n+1) dans le meilleur des cas :
-    	//		> On parcourt une fois les deux arbres et puis on compare. Si le premier element est different,
-    	//		  on retourne false (ca fait le +1 dans la complexite).
-    	//
-    	// return this.toString().equals(autre.toString());
-    	
+    /**
+     * Arbres equivalents. Deux arbres binaires sont équivalents s’ils contiennent les mêmes éléments.
+	 *
+     * Cette méthode renvoie true si l’arbre est équivalent à abr et false sinon.
+     *       
+     * @param autre
+     * @return
+     */
+    public boolean equivalent(ABR<T> autre) {    	
     	// Methode iterative, on retourne des que l'on trouve un element different
     	// -----------------------------------------------------------------------
     	// Complexite O(n) dans le pire des cas (n le nombre de noeuds de l'arbre le plus petit) :
@@ -505,15 +419,6 @@ class ABR<T> {
     	
     	// Sinon, on execute l'algorithme
     	ResultatEquivalentContenu resultat = auxiliaireEquivalentContenu(autre);
-
-        /*
-        System.out.println("Condition sortie :");
-        System.out.println("\t Egaux = " + egaux);
-        System.out.println("\t Arbre A stack vide = " + resultat.stackVide_A);
-        System.out.println("\t Arbre B stack vide = " + resultat.stackVide_B);
-        System.out.println("\t Arbre A noeud null = " + (resultat.noeudNull_A));
-        System.out.println("\t Arbre B noeud null = " + (resultat.noeudNull_B));
-        */
         
         // On retourne false si un arbre est plus grand que l'autre (ca on le voit par rapport
         //		a l'etat du stack et du noeud en cours).
@@ -524,6 +429,13 @@ class ABR<T> {
     }
     
     
+    /**
+     * Arbre contenu dans un autre. Un ABR A est contenu dans un ABR B si et seulement si tous les
+     * éléments de A sont dans B. Cette fonction renvoie true si l’arbre est contenu dans abr.
+     * 
+     * @param autre
+     * @return
+     */
     public boolean contenuDans(ABR<T> autre) {
     	// Methode iterative, on retourne des que l'on trouve un element different
     	// -----------------------------------------------------------------------
@@ -546,15 +458,6 @@ class ABR<T> {
     	
     	// Sinon, on execute l'algorithme
     	ResultatEquivalentContenu resultat = auxiliaireEquivalentContenu(autre);
-
-        /*
-        System.out.println("Condition sortie :");
-        System.out.println("\t Egaux = " + egaux);
-        System.out.println("\t Arbre A stack vide = " + resultat.stackVide_A);
-        System.out.println("\t Arbre B stack vide = " + resultat.stackVide_B);
-        System.out.println("\t Arbre A noeud null = " + (resultat.noeudNull_A));
-        System.out.println("\t Arbre B noeud null = " + (resultat.noeudNull_B));
-        */
         
         // On retourne false si l'arbre "this" est plus grand que "autre" (ca on le voit par rapport
         //		a l'etat du stack et du noeud en cours).
@@ -564,6 +467,13 @@ class ABR<T> {
     }
     
     
+    /**
+     * Fusion d’arbres. L’ABR C est dit fusion des arbres A et B si et seulement si U contient tous
+     * les noeuds de A et tous ceux de B. Cette procédure fusionne deux arbres, en évitant de recréer
+     * un troisième arbre par recopies des données de A et B.
+     * 
+     * @param autre
+     */
     public void fusion(ABR<T> autre) {
     	Stack<ABR> stack_B = new Stack<ABR>();
         ABR noeud_B = autre;
@@ -571,7 +481,6 @@ class ABR<T> {
         // Iteration Racine-Gauche-Droite
         while (! stack_B.isEmpty() || noeud_B != null) {	// Tant qu'il y a d'elements dans l'arbre B (autre)
         	if (noeud_B != null) {
-        		System.out.println("Ajout " + noeud_B.donnee);
         		this.insertionFeuille(noeud_B.donnee);
         		
 	            stack_B.push(noeud_B.filsGauche);
@@ -580,99 +489,6 @@ class ABR<T> {
         	
         	noeud_B = stack_B.pop();
         }
-    }
-
-
-
-
-    /* *********************************************************************** */
-    /*     TEST PERSO                                                          */
-    /* *********************************************************************** */
-
-    private static void printIteratif(ABR a) {
-        ABR noeud = a;
-        Stack<ABR> stack = new Stack<ABR>();
-
-        while (! stack.isEmpty() || noeud != null) {
-            if (noeud != null) {
-                stack.push(noeud);
-                noeud = noeud.filsGauche;
-            }
-            else {
-                noeud = stack.pop();
-                System.out.println(noeud.donnee);
-                noeud = noeud.filsDroit;
-            }
-        }
-    }
-
-    private static void print(ABR a) {
-        System.out.println("-- Arbre --");
-        System.out.println("Racine > " + a.donnee);
-
-        if (a.filsGauche != null)
-            System.out.println("Racine Gauche > " + a.filsGauche.donnee);
-
-        System.out.println("Gauche > " + a.filsGauche);
-
-        if (a.filsDroit != null)
-            System.out.println("Racine Droite > " + a.filsDroit.donnee);
-
-        System.out.println("Droite > " + a.filsDroit);
-        System.out.println("-------------------------------------------\n");
-    }
-
-    public static void main(String args[]) {
-
-        ABR a2 = new ABR<String>(new DonneeGenerique<String>("test"));
-        print(a2);
-
-        a2.insertionFeuille(new DonneeGenerique<String>("CERI"));
-        print(a2);
-
-		a2.insertionFeuille(new DonneeGenerique<String>("alternance"));
-        print(a2);
-
-		a2.insertionFeuille(new DonneeGenerique<String>("M1"));
-        print(a2);
-
-		a2.insertionFeuille(new DonneeGenerique<String>("CERI"));
-        print(a2);
-
-		a2.insertionFeuille(new DonneeGenerique<String>("algorithmique"));
-        print(a2);
-
-		a2.insertionFeuille(new DonneeGenerique<String>("avancée"));
-        print(a2);
-
-        /*
-        ABR a2 = new ABR<String>(new DonneeGenerique<String>("D"));
-        print(a2);
-
-        a2.insertionFeuille(new DonneeGenerique<String>("B"));
-        print(a2);
-
-		a2.insertionFeuille(new DonneeGenerique<String>("A"));
-        print(a2);
-
-		a2.insertionFeuille(new DonneeGenerique<String>("C"));
-        print(a2);
-
-		a2.insertionFeuille(new DonneeGenerique<String>("E"));
-        print(a2);
-
-		a2.insertionFeuille(new DonneeGenerique<String>("G"));
-        print(a2);
-
-		a2.insertionFeuille(new DonneeGenerique<String>("F"));
-        print(a2);
-        */
-
-        System.out.println("ARBRE FINAL > " + a2);
-
-        System.out.println("TEST ITERATIF");
-        printIteratif(a2);
-
     }
 
 }
