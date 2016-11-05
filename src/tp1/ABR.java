@@ -4,7 +4,7 @@ import java.util.Stack;
 
 /**
  *   La classe ABR  represente un noeud d'un Arbre Binaire de Recherche, contenant une donnee avec une valeur et un cle.
- *   Les methodes implementees sont it�ratives.
+ *   Les methodes implementees sont iteratives.
  */
 class ABR<T> {
     DonneeGenerique donnee;
@@ -26,7 +26,7 @@ class ABR<T> {
      * 
      * @return
      */
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return (this.donnee == null);
     }
 
@@ -302,40 +302,42 @@ class ABR<T> {
     /* ************************************************************************ */
     /* 		Implémentation méthodes avancées									*/
     /* ************************************************************************ */
-
-    private class ResultatEquivalentContenu {
-    	boolean egaux;
-    	boolean stackVide_A;
-    	boolean stackVide_B;
-    	boolean noeudNull_A;
-    	boolean noeudNull_B;
-    }
     
     /**
-     * Cette methode execute la boucle pour savoir si un arbre est contenu dans un autre
-     * ou si deux arbres sont equivalents. La boucle est la meme pour les deux cas, la
-     * seule difference est que, dans le cas de la methode equivalents, a la fin de la
-     * boucle les deux arbres doivent avoir ete completement parcourus. Ce n'est pas le cas
-     * de la methode contenu.
-     * Du coup, on retourne un classe avec dse boolean contenant les valeurs finales de chaque
-     * variable qui nous interesse.
-     * 
-     * <pre>
-     * Le resultat final contiendra :
-     * 	- egaux > la derniere valeur de la variable egaux
-     * 	- stackVide_A > true si le stack pour l'arbre A (this) est vide, false dans le cas contraire
-     * 	- stackVide_B > true si le stack pour l'arbre B (autre) est vide, false dans le cas contraire
-     * 	- noeudNull_A > true si le dernier noeud recupere de l'arbre A (this) est null, false dans le cas contraire
-     * 	- noeudNull_B > true si le dernier noeud recupere de l'arbre B (autre) est null, false dans le cas contraire
-     * </pre>
-     * 
-     * Toutes ces valeurs seront utilisees par equivalent et contenu.
-     * 
+     * Arbres equivalents. Deux arbres binaires sont équivalents s’ils contiennent les mêmes éléments.
+	 *
+     * Cette méthode renvoie true si l’arbre est équivalent à abr et false sinon.
+     *       
      * @param autre
      * @return
      */
-    private ResultatEquivalentContenu auxiliaireEquivalentContenu(ABR<T> autre) {
-    	ResultatEquivalentContenu resultat = new ResultatEquivalentContenu();
+    public boolean equivalent(ABR<T> autre) {    	
+    	// Methode iterative, on retourne des que l'on trouve un element different
+    	// -----------------------------------------------------------------------
+    	// Complexite O(n) dans le pire des cas (n le nombre de noeuds de l'arbre le plus petit) :
+    	//		> Le pire des cas c'est quand les arbres sont equivalents ou ils different dans le dernier
+    	//		  element de l'arbre le plus petit.
+    	//
+    	// Complexite O(1) dans le meilleur des cas :
+    	//		> On est dans le meilleur des cas quand les elements les plus petits se trouvent a la racine des
+    	// 		  deux arbres quand ces elements sont differentes entre eux.
+    	//		> Vu que l'on commence a comparer les arbres depuis les elements les plus petits dans chacun,
+    	//		  si ceux-ci se trouvent a la racine, on les comparera tout de suite apres le premier tour de la boucle.
+    	
+    	
+    	// Si les deux arbres sont vides, on retourne tout de suite true
+    	// On dit que l'arbre recu en parametre est vide s'il est null ou vraiment vide.
+    	if (this.isEmpty() && (autre == null || autre.isEmpty())) {
+    		return true;
+    	}
+    	
+    	// Si l'un est vide est l'autre non, on retourne tout de suite false
+    	if (this.isEmpty() != (autre == null || autre.isEmpty())) {
+    		return false;
+    	}
+    	
+    	
+    	// Sinon, on execute l'algorithme
     	
     	Stack<ABR> stack_A = new Stack<ABR>();
         Stack<ABR> stack_B = new Stack<ABR>();
@@ -376,56 +378,13 @@ class ABR<T> {
 	        }
         }
         
-        resultat.egaux = egaux;
-        resultat.stackVide_A = stack_A.isEmpty();
-        resultat.stackVide_B = stack_B.isEmpty();
-        resultat.noeudNull_A = (noeud_A == null);
-        resultat.noeudNull_B = (noeud_B == null);
-        
-        return resultat;
-    }
-    
-    /**
-     * Arbres equivalents. Deux arbres binaires sont équivalents s’ils contiennent les mêmes éléments.
-	 *
-     * Cette méthode renvoie true si l’arbre est équivalent à abr et false sinon.
-     *       
-     * @param autre
-     * @return
-     */
-    public boolean equivalent(ABR<T> autre) {    	
-    	// Methode iterative, on retourne des que l'on trouve un element different
-    	// -----------------------------------------------------------------------
-    	// Complexite O(n) dans le pire des cas (n le nombre de noeuds de l'arbre le plus petit) :
-    	//		> Les arbres sont equivalents ou ils different dans le dernier element de l'arbre le plus petit.
-    	//
-    	// Complexite O(1) dans le meilleur des cas, quand l'element le plus petit se trouve a la racine des
-    	// deux arbres et quand cet element est different entre les deux arbres :
-    	//		> Vu que l'on commence a comparer les arbres depuis les elements les plus petits dans chacun,
-    	//		  si ceux-ci se trouvent a la racine, on les comparera tout de suite apres le premier tour de la boucle.
-    	
-    	
-    	// Si les deux arbres sont vides, on retourne tout de suite true
-    	// On dit que l'arbre recu en parametre est vide s'il est null ou vraiment vide.
-    	if (this.isEmpty() && (autre == null || autre.isEmpty())) {
-    		return true;
-    	}
-    	
-    	// Si l'un est vide est l'autre non, on retourne tout de suite false
-    	if (this.isEmpty() != (autre == null || autre.isEmpty())) {
-    		return false;
-    	}
-    	
-    	
-    	// Sinon, on execute l'algorithme
-    	ResultatEquivalentContenu resultat = auxiliaireEquivalentContenu(autre);
         
         // On retourne false si un arbre est plus grand que l'autre (ca on le voit par rapport
         //		a l'etat du stack et du noeud en cours).
         // Sinon, on retourne la derniere valeur stockee dans "egaux".
-        return (resultat.stackVide_A && resultat.stackVide_B
-        		&& resultat.noeudNull_A && resultat.noeudNull_B
-        		&& resultat.egaux);
+        return (stack_A.isEmpty() && stack_B.isEmpty()
+        		&& noeud_A == null && noeud_B == null
+        		&& egaux);
     }
     
     
@@ -437,16 +396,18 @@ class ABR<T> {
      * @return
      */
     public boolean contenuDans(ABR<T> autre) {
-    	// Methode iterative, on retourne des que l'on trouve un element different
+    	// Methode iterative
     	// -----------------------------------------------------------------------
-    	// Complexite O(n) dans le pire des cas (n le nombre de noeuds de l'arbre le plus petit) :
-    	//		> Les arbres sont equivalents, ils different dans le dernier element de l'arbre le plus petit,
-    	//		  l'arbre "this" est contenu dans "autre", ou "this" a plus d'elements que "autre".
+    	// Complexite O(n) dans le pire des cas (n le nombre de noeuds de l'arbre "autre") :
+    	//		> Si "this" a un element qui n'est pas dans "autre", mais qui est superieur au maximum dans "autre",
+    	//		  on est obligé de parcourir tout B pour se rendre compte que "this" n'est pas contenu dans "autre".
+    	//		> La complexité est la même si "this" est equivalent à "autre" ou s'il est contenu et leur maximums
+    	//		  sont egaux.  
     	//
-    	// Complexite O(1) dans le meilleur des cas, quand l'element le plus petit se trouve a la racine des
-    	// deux arbres et quand cet element est different pour chaque arbre :
+    	// Complexite O(1) dans le meilleur des cas :
     	//		> Vu que l'on commence a comparer les arbres depuis les elements les plus petits dans chacun,
-    	//		  si ceux-ci se trouvent a la racine, on les comparera tout de suite apres le premier tour de la boucle.
+    	//		  si le plus petit dans "this" est inférieur au plus petit dans "autre", on sait que ca sert
+    	//		  à rien de continuer à parcourir "autre". L'arbre "this" n'est pas contenu dans "autre".
     	
     	
     	// Si l'arbre "this" est vide, il est donc contenu dans tout arbre.
@@ -455,15 +416,66 @@ class ABR<T> {
     		return true;
     	}
     	
-    	
     	// Sinon, on execute l'algorithme
-    	ResultatEquivalentContenu resultat = auxiliaireEquivalentContenu(autre);
+    	
+    	Stack<ABR> stack_A = new Stack<ABR>();
+        Stack<ABR> stack_B = new Stack<ABR>();
+
+        ABR noeud_A = this;
+        ABR noeud_B = autre;
         
-        // On retourne false si l'arbre "this" est plus grand que "autre" (ca on le voit par rapport
-        //		a l'etat du stack et du noeud en cours).
-        // Sinon, on retourne la derniere valeur stockee dans "egaux".
-        return (resultat.stackVide_A && resultat.noeudNull_A
-        		&& resultat.egaux);
+        while ((! stack_A.isEmpty() || noeud_A != null)				// Tant qu'il y a d'elements dans l'arbre A 
+				&& (! stack_B.isEmpty() || noeud_B != null)) {		// Tant qu'il y a d'elements dans l'arbre B
+        	
+	        // Iteration jusqu'au plus petit
+	        if (noeud_A != null || noeud_B != null) {
+	            if (noeud_A != null) {
+	                stack_A.push(noeud_A);
+	                noeud_A = noeud_A.filsGauche;
+	            }
+	            
+	            if (noeud_B != null) {
+	                stack_B.push(noeud_B);
+	                noeud_B = noeud_B.filsGauche;
+	            }
+	        }
+	        
+	        // La on est au plus petits des deux
+	        else {
+		        // On extrait le premier de chaque stack
+		        noeud_A = stack_A.pop();
+		        noeud_B = stack_B.pop();
+		        
+		        // On compare
+		        int comparaison = noeud_A.donnee.compareTo(noeud_B.donnee);
+		        
+		        // Si le noeud dans A est inférieur à celui dans B, cela veut dire
+		        // que l'on ne va jamais trouver cette valeur dans B.
+		        // Du coup on retourne tout de suite false.
+		        if (comparaison < 0) {
+		        	return false;
+		        }
+		        
+		        // Sinon, si le noeud dans A est superieur a B, il faut continuer le parcourt dans B tant
+		        // que l'on ne trouve pas un element egal ou superieur au noeud de A.
+		        else if (comparaison > 0) {
+		        	stack_A.push(noeud_A);
+		        	noeud_A = null;
+		        }
+		        
+		        // Sinon on avance dans les deux arbres
+		        else {
+		        	noeud_A = noeud_A.filsDroit;
+		        }
+		        
+		        noeud_B = noeud_B.filsDroit;
+	        }
+        }
+    	
+        // On retourne true si l'arbre A a pas ete parcouru completement.
+        // Sinon, soit il est plus grand que B, soit il y a au moins un element dans
+        // A qui n'est pas dans B. On retourne false dans ce cas.
+        return (stack_A.isEmpty() && noeud_A == null);
     }
     
     
