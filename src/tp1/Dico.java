@@ -28,6 +28,9 @@ public class Dico {
 	 * 
 	 */
 	public Dico() {
+		// On crée un abr avec un mot et puis on supprime le mot pour avoir l'ABR vide
+		abr = new ABR<>(new StringData("temp"));
+		abr.suppression("temp");
 	}
 	
 	/**
@@ -68,28 +71,22 @@ public class Dico {
 	}
 	
 	public boolean isEmpty() {
-		return abr == null || abr.isEmpty();
+		return abr == null;
 	}
 	
 	public void ajouterMot(String mot) {
 		StringData data = new StringData(mot);
 		
 		if (! data.cle.equals("")) {
-			if (this.isEmpty())
-				abr = new ABR<>(data);
-			else
-				abr.insertionFeuille(data);
+			abr.insertionFeuille(data);
 		}
 	}
 	
 	public void supprimerMot(String mot) {
-		if (! this.isEmpty())
-			abr.suppression(mot);
+		abr.suppression(mot);
 	}
 	
 	/**
-	 * Precondition : le dictionnaire n'est pas vide
-	 * 
 	 * @param autreDict
 	 * @return
 	 */
@@ -98,8 +95,6 @@ public class Dico {
 	}
 	
 	/**
-	 * Precondition : le dictionnaire n'est pas vide
-	 * 
 	 * @param autreDict
 	 * @return
 	 */
@@ -108,24 +103,21 @@ public class Dico {
 	}
 	
 	/**
-	 * Precondition : le dictionnaire n'est pas vide
-	 * 
 	 * @param autreDict
 	 */
 	public void fusion(Dico autreDict) {
 		abr.fusion(autreDict.abr);
 	}
 	
+	/**
+	 * @return
+	 */
 	public int hauteur() {
-		if (this.isEmpty())
-			return 0;
-		else
-			return abr.hauteur();
+		return abr.hauteur();
 	}
 	
 	/**
 	 * Retourne le maximum de l'ABR contenu.
-	 * Precondition : le dictionnaire n'est pas vide
 	 * 
 	 * @return
 	 */
@@ -135,7 +127,6 @@ public class Dico {
 	
 	/**
 	 * Retourne le minimum de l'ABR contenu.
-	 * Precondition : le dictionnaire n'est pas vide
 	 * 
 	 * @return
 	 */
@@ -150,7 +141,7 @@ public class Dico {
 	 * @return
 	 */
 	public boolean existeMot(String mot) {
-		return (! this.isEmpty()) && (abr.recherche(mot) != null);
+		return (abr.recherche(mot) != null);
 	}
 	
 	/**

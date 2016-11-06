@@ -26,7 +26,7 @@ class ABR<T> {
      * 
      * @return
      */
-    public boolean isEmpty() {
+    private boolean isEmpty() {
         return (this.donnee == null);
     }
 
@@ -247,27 +247,34 @@ class ABR<T> {
 
         // Suppression de la racine
         if (this == aSupprimer) {
-            if (this.filsGauche == null) {
+        	// La racine est le seul élément
+            if (this.filsGauche == null && this.filsDroit == null) {
+            	this.donnee = null;
+            }
+            
+            else if (this.filsGauche == null) {
                 this.donnee = this.filsDroit.donnee;
+            	this.deplacer(this.filsDroit, this.filsDroit.filsDroit);
+            	
                 this.filsGauche = this.filsDroit.filsGauche;
-                this.filsDroit = this.filsDroit.filsDroit;
+                this.filsGauche.pere = this;
+            }
+            else if (this.filsDroit == null) {
+                this.donnee = this.filsGauche.donnee;
+                this.deplacer(this.filsGauche, this.filsGauche.filsGauche);
+                
+                this.filsDroit = this.filsGauche.filsDroit;
+                this.filsDroit.pere = this;
             }
             else {
-                if (aSupprimer.filsDroit == null) {
-                    this.donnee = this.filsGauche.donnee;
-                    this.filsGauche = this.filsGauche.filsGauche;
-                    this.filsDroit = this.filsGauche.filsDroit;
-                }
-                else {
-                    ABR<T> max = this.filsGauche.maximum();
+                ABR<T> max = this.filsGauche.maximum();
 
-                    this.donnee = max.donnee;
+                this.donnee = max.donnee;
 
-                    if (max == this.filsGauche)
-                        this.filsGauche = max.filsGauche;
-                    else
-                        this.deplacer(max, max.filsGauche);
-                }
+                if (max == this.filsGauche)
+                    this.filsGauche = max.filsGauche;
+                else
+                    this.deplacer(max, max.filsGauche);
             }
         }
 

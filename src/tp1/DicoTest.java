@@ -10,8 +10,8 @@ import org.junit.rules.TestName;
 
 public class DicoTest {
 
-	//private static final String DICT_FRANCAIS = "francais.mots.mixed";
-	private static final String DICT_FRANCAIS = "francais.mots";
+	private static final String DICT_FRANCAIS = "francais.mots.mixed";
+	//private static final String DICT_FRANCAIS = "francais.mots";
 	
 	private void log(String texte) {
 		System.out.println(texte);
