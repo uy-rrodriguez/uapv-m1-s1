@@ -27,7 +27,7 @@ public class DicoTest {
 
 	@After
 	public void tearDown() throws Exception {
-		System.out.println("_________________________________________________\n");
+		log("_________________________________________________\n");
 	}
 	
 	
