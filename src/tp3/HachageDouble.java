@@ -22,6 +22,7 @@ public class HachageDouble<T> extends Hachage<T> {
 			int h = this.h(d);
 			
 			int i = 0;
+			boolean trouve = false;
 			while (i < m && this.tableau[(h + k*i) % m] != null)
 				i++;
 			
