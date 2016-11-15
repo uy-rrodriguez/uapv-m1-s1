@@ -20,3 +20,9 @@ InterfaceMP3.o: InterfaceMP3.cpp InterfaceMP3.h
 
 clean:
 	rm *.o clientmp3
+
+test:
+	slice2py ../interface/InterfaceMP3.ice
+
+run:
+	python ClientMP3.py

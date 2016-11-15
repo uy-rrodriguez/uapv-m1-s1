@@ -1,5 +1,7 @@
 CC=g++
 COPTS=-I.
+#ICE_LIBS=$ICE_HOME/lib/*
+ICE_LIBS=G:/Dev/Ice-3.6.3/lib/*
 
 
 serveurmp3: ServeurMP3.cpp InterfaceMP3.o
@@ -13,3 +15,12 @@ InterfaceMP3.o: InterfaceMP3.cpp InterfaceMP3.h
 
 clean:
 	rm *.o serveurmp3
+
+test:
+	slice2java --output-dir generated ../interface/InterfaceMP3.ice
+	javac -d classes -classpath "$(ICE_LIBS)" ServeurMP3.java ServeurMP3I.java generated/ArchDistrib/*.java
+
+run:
+	java -classpath "$(ICE_LIBS)";classes ServeurMP3
+
+
