@@ -20,8 +20,10 @@
 
 package ArchDistrib;
 
-public class Tag extends Ice.ObjectImpl
+public class Tag implements java.lang.Cloneable, java.io.Serializable
 {
+    public String name;
+
     public Tag()
     {
         name = "";
@@ -32,88 +34,96 @@ public class Tag extends Ice.ObjectImpl
         this.name = name;
     }
 
-    private static class __F implements Ice.ObjectFactory
+    public boolean
+    equals(java.lang.Object rhs)
     {
-        public Ice.Object create(String type)
+        if(this == rhs)
         {
-            assert(type.equals(ice_staticId()));
-            return new Tag();
+            return true;
+        }
+        Tag _r = null;
+        if(rhs instanceof Tag)
+        {
+            _r = (Tag)rhs;
         }
 
-        public void destroy()
+        if(_r != null)
         {
+            if(name != _r.name)
+            {
+                if(name == null || _r.name == null || !name.equals(_r.name))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
-    }
-    private static Ice.ObjectFactory _factory = new __F();
 
-    public static Ice.ObjectFactory
-    ice_factory()
-    {
-        return _factory;
+        return false;
     }
 
-    public static final String[] __ids =
+    public int
+    hashCode()
     {
-        "::ArchDistrib::Tag",
-        "::Ice::Object"
-    };
-
-    public boolean ice_isA(String s)
-    {
-        return java.util.Arrays.binarySearch(__ids, s) >= 0;
+        int __h = 5381;
+        __h = IceInternal.HashUtil.hashAdd(__h, "::ArchDistrib::Tag");
+        __h = IceInternal.HashUtil.hashAdd(__h, name);
+        return __h;
     }
-
-    public boolean ice_isA(String s, Ice.Current __current)
-    {
-        return java.util.Arrays.binarySearch(__ids, s) >= 0;
-    }
-
-    public String[] ice_ids()
-    {
-        return __ids;
-    }
-
-    public String[] ice_ids(Ice.Current __current)
-    {
-        return __ids;
-    }
-
-    public String ice_id()
-    {
-        return __ids[0];
-    }
-
-    public String ice_id(Ice.Current __current)
-    {
-        return __ids[0];
-    }
-
-    public static String ice_staticId()
-    {
-        return __ids[0];
-    }
-
-    protected void __writeImpl(IceInternal.BasicStream __os)
-    {
-        __os.startWriteSlice(ice_staticId(), -1, true);
-        __os.writeString(name);
-        __os.endWriteSlice();
-    }
-
-    protected void __readImpl(IceInternal.BasicStream __is)
-    {
-        __is.startReadSlice();
-        name = __is.readString();
-        __is.endReadSlice();
-    }
-
-    public String name;
 
     public Tag
     clone()
     {
-        return (Tag)super.clone();
+        Tag c = null;
+        try
+        {
+            c = (Tag)super.clone();
+        }
+        catch(CloneNotSupportedException ex)
+        {
+            assert false; // impossible
+        }
+        return c;
     }
 
-    public static final long serialVersionUID = -1451038488L;
+    public void
+    __write(IceInternal.BasicStream __os)
+    {
+        __os.writeString(name);
+    }
+
+    public void
+    __read(IceInternal.BasicStream __is)
+    {
+        name = __is.readString();
+    }
+
+    static public void
+    __write(IceInternal.BasicStream __os, Tag __v)
+    {
+        if(__v == null)
+        {
+            __nullMarshalValue.__write(__os);
+        }
+        else
+        {
+            __v.__write(__os);
+        }
+    }
+
+    static public Tag
+    __read(IceInternal.BasicStream __is, Tag __v)
+    {
+        if(__v == null)
+        {
+             __v = new Tag();
+        }
+        __v.__read(__is);
+        return __v;
+    }
+    
+    private static final Tag __nullMarshalValue = new Tag();
+
+    public static final long serialVersionUID = -1669300366L;
 }

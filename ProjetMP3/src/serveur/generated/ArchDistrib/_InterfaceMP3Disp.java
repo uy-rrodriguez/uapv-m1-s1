@@ -145,7 +145,6 @@ public abstract class _InterfaceMP3Disp extends Ice.ObjectImpl implements Interf
         Song[] __ret = __obj.listSongs(__current);
         IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
         SongSeqHelper.write(__os, __ret);
-        __os.writePendingObjects();
         __inS.__endWriteParams(true);
         return Ice.DispatchStatus.DispatchOK;
     }
@@ -162,7 +161,6 @@ public abstract class _InterfaceMP3Disp extends Ice.ObjectImpl implements Interf
         Song[] __ret = __obj.searchSongs(nameRegex, artistRegex, __current);
         IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
         SongSeqHelper.write(__os, __ret);
-        __os.writePendingObjects();
         __inS.__endWriteParams(true);
         return Ice.DispatchStatus.DispatchOK;
     }

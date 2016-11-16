@@ -20,8 +20,18 @@
 
 package ArchDistrib;
 
-public class Song extends Ice.ObjectImpl
+public class Song implements java.lang.Cloneable, java.io.Serializable
 {
+    public int id;
+
+    public String name;
+
+    public String artist;
+
+    public String path;
+
+    public Tag[] tags;
+
     public Song()
     {
         name = "";
@@ -38,104 +48,130 @@ public class Song extends Ice.ObjectImpl
         this.tags = tags;
     }
 
-    private static class __F implements Ice.ObjectFactory
+    public boolean
+    equals(java.lang.Object rhs)
     {
-        public Ice.Object create(String type)
+        if(this == rhs)
         {
-            assert(type.equals(ice_staticId()));
-            return new Song();
+            return true;
+        }
+        Song _r = null;
+        if(rhs instanceof Song)
+        {
+            _r = (Song)rhs;
         }
 
-        public void destroy()
+        if(_r != null)
         {
+            if(id != _r.id)
+            {
+                return false;
+            }
+            if(name != _r.name)
+            {
+                if(name == null || _r.name == null || !name.equals(_r.name))
+                {
+                    return false;
+                }
+            }
+            if(artist != _r.artist)
+            {
+                if(artist == null || _r.artist == null || !artist.equals(_r.artist))
+                {
+                    return false;
+                }
+            }
+            if(path != _r.path)
+            {
+                if(path == null || _r.path == null || !path.equals(_r.path))
+                {
+                    return false;
+                }
+            }
+            if(!java.util.Arrays.equals(tags, _r.tags))
+            {
+                return false;
+            }
+
+            return true;
         }
-    }
-    private static Ice.ObjectFactory _factory = new __F();
 
-    public static Ice.ObjectFactory
-    ice_factory()
-    {
-        return _factory;
+        return false;
     }
 
-    public static final String[] __ids =
+    public int
+    hashCode()
     {
-        "::ArchDistrib::Song",
-        "::Ice::Object"
-    };
-
-    public boolean ice_isA(String s)
-    {
-        return java.util.Arrays.binarySearch(__ids, s) >= 0;
+        int __h = 5381;
+        __h = IceInternal.HashUtil.hashAdd(__h, "::ArchDistrib::Song");
+        __h = IceInternal.HashUtil.hashAdd(__h, id);
+        __h = IceInternal.HashUtil.hashAdd(__h, name);
+        __h = IceInternal.HashUtil.hashAdd(__h, artist);
+        __h = IceInternal.HashUtil.hashAdd(__h, path);
+        __h = IceInternal.HashUtil.hashAdd(__h, tags);
+        return __h;
     }
 
-    public boolean ice_isA(String s, Ice.Current __current)
+    public Song
+    clone()
     {
-        return java.util.Arrays.binarySearch(__ids, s) >= 0;
+        Song c = null;
+        try
+        {
+            c = (Song)super.clone();
+        }
+        catch(CloneNotSupportedException ex)
+        {
+            assert false; // impossible
+        }
+        return c;
     }
 
-    public String[] ice_ids()
+    public void
+    __write(IceInternal.BasicStream __os)
     {
-        return __ids;
-    }
-
-    public String[] ice_ids(Ice.Current __current)
-    {
-        return __ids;
-    }
-
-    public String ice_id()
-    {
-        return __ids[0];
-    }
-
-    public String ice_id(Ice.Current __current)
-    {
-        return __ids[0];
-    }
-
-    public static String ice_staticId()
-    {
-        return __ids[0];
-    }
-
-    protected void __writeImpl(IceInternal.BasicStream __os)
-    {
-        __os.startWriteSlice(ice_staticId(), -1, true);
         __os.writeInt(id);
         __os.writeString(name);
         __os.writeString(artist);
         __os.writeString(path);
         TagSeqHelper.write(__os, tags);
-        __os.endWriteSlice();
     }
 
-    protected void __readImpl(IceInternal.BasicStream __is)
+    public void
+    __read(IceInternal.BasicStream __is)
     {
-        __is.startReadSlice();
         id = __is.readInt();
         name = __is.readString();
         artist = __is.readString();
         path = __is.readString();
         tags = TagSeqHelper.read(__is);
-        __is.endReadSlice();
     }
 
-    public int id;
-
-    public String name;
-
-    public String artist;
-
-    public String path;
-
-    public Tag[] tags;
-
-    public Song
-    clone()
+    static public void
+    __write(IceInternal.BasicStream __os, Song __v)
     {
-        return (Song)super.clone();
+        if(__v == null)
+        {
+            __nullMarshalValue.__write(__os);
+        }
+        else
+        {
+            __v.__write(__os);
+        }
     }
 
-    public static final long serialVersionUID = 443363239L;
+    static public Song
+    __read(IceInternal.BasicStream __is, Song __v)
+    {
+        if(__v == null)
+        {
+             __v = new Song();
+        }
+        __v.__read(__is);
+        return __v;
+    }
+    
+    private static final Song __nullMarshalValue = new Song();
+
+    public static final long serialVersionUID = 780774717L;
 }

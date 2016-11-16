@@ -34,7 +34,7 @@ public final class TagSeqHelper
             __os.writeSize(__v.length);
             for(int __i0 = 0; __i0 < __v.length; __i0++)
             {
-                __os.writeObject(__v[__i0]);
+                Tag.__write(__os, __v[__i0]);
             }
         }
     }
@@ -44,11 +44,10 @@ public final class TagSeqHelper
     {
         Tag[] __v;
         final int __len0 = __is.readAndCheckSeqSize(1);
-        final String __type0 = Tag.ice_staticId();
         __v = new Tag[__len0];
         for(int __i0 = 0; __i0 < __len0; __i0++)
         {
-            __is.readObject(new IceInternal.SequencePatcher(__v, Tag.class, __type0, __i0));
+            __v[__i0] = Tag.__read(__is, __v[__i0]);
         }
         return __v;
     }

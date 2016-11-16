@@ -423,7 +423,6 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
             IceInternal.BasicStream __is = __result.startReadParams();
             Song[] __ret;
             __ret = SongSeqHelper.read(__is);
-            __is.readPendingObjects();
             __result.endReadParams();
             return __ret;
         }
@@ -1027,7 +1026,6 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
             IceInternal.BasicStream __is = __result.startReadParams();
             Song[] __ret;
             __ret = SongSeqHelper.read(__is);
-            __is.readPendingObjects();
             __result.endReadParams();
             return __ret;
         }

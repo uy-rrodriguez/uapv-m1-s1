@@ -2,32 +2,64 @@ import sys, traceback, Ice
 import ArchDistrib
 
 class ClientMP3:
-  def __init__(self, serveur):
-    self.serveur = serveur
+    def __init__(self, serveur):
+        self.serveur = serveur
 
-  def addSong(self, name, artist, path):
-    print("addSong name=" + name + "; artist=" + artist + "; path=" + path)
+    def askForParams(self, params):
+        values = {}
+        for p in params:
+            values[p] = raw_input("Inserez la valeur pour " + p + " : ")
+        return values
 
-  def removeSong(self, id):
-    print("removeSong id=" + str(id))
+    def printSongList(self, songs):
+        print "\n", "-"*60
+        print "Liste de chansons :"
+        print "\t\t".join(["ID", "Nom", "Artiste", "Tags"])
+        for s in songs:
+            print "\t\t".join([str(s.id), s.name, s.artist, "[" + ", ".join(s.tags) + "]"])
 
-  def listSongs(self):
-    print("listSongs")
+        print "\n"
 
-  def searchSongs(self, nameRegex, artistRegex):
-    print("searchSongs nameRegex=" + nameRegex + "; artistRegex=" + artistRegex)
 
-  def playSong(self, id):
-    print("playSong id=" + str(id))
+    def addSong(self):
+        #print("addSong name=" + name + "; artist=" + artist + "; path=" + path)
+        values = self.askForParams(["nom", "artiste", "path"])
+        self.serveur.addSong(values["nom"], values["artiste"], values["path"])
 
-  def addTagSong(self, id, name):
-    print("addTagSong id=" + str(id) + "; name=" + name)
+    def removeSong(self):
+        #print("removeSong id=" + str(id))
+        values = self.askForParams(["id"])
+        self.serveur.removeSong(int(values["id"]))
 
-  def removeTagSong(self, id, name):
-    print("removeTagSong id=" + str(id) + "; name=" + name)
+    def listSongs(self):
+        #print("listSongs")
+        songs = self.serveur.listSongs()
+        self.printSongList(songs)
 
-  def shutdown(self):
-    print("shutdown")
+    def searchSongs(self):
+        #print("searchSongs nameRegex=" + nameRegex + "; artistRegex=" + artistRegex)
+        values = self.askForParams(["nom", "artiste"])
+        songs = self.serveur.searchSongs(values["nom"], values["artiste"])
+        self.printSongList(songs)
+
+    def playSong(self):
+        #print("playSong id=" + str(id))
+        values = self.askForParams(["id"])
+        self.serveur.playSong(int(values["id"]))
+
+    def addTagSong(self):
+        #print("addTagSong id=" + str(id) + "; name=" + name)
+        values = self.askForParams(["id", "name"])
+        self.serveur.addTagSong(int(values["id"]), values["name"])
+
+    def removeTagSong(self):
+        #print("removeTagSong id=" + str(id) + "; name=" + name)
+        values = self.askForParams(["id", "name"])
+        self.serveur.removeTagSong(int(values["id"]), values["name"])
+
+    def shutdown(self):
+        #print("shutdown")
+        self.serveur.shutdown()
 
 
 def menu():
@@ -40,7 +72,7 @@ def menu():
     print("6 - addTagSong \t\t : id name")
     print("7 - removeTagSong \t : id name")
     print("8 - shutdown")
-    print("exit - Fermer le programme")
+    print("0 - Fermer le programme")
     print("")
 
 def main_loop(client):
@@ -48,42 +80,45 @@ def main_loop(client):
     menu()
 
     # Boucle pour lire commandes utilisateur
-    cmd = raw_input(str("Choisir une option : "))
-    while cmd != "exit":
-        args = cmd.split()
+    cmd = raw_input("Choisir une option : ")
+    while cmd != "0":
+        try:
+            if cmd == "1":
+                client.addSong()
 
-        if len(args) > 0:
-            if args[0] == "1" and len(args) >= 4:
-                client.addSong(args[1], args[2], args[3])
+            elif cmd == "2":
+                client.removeSong()
 
-            elif args[0] == "2" and len(args) >= 2:
-                client.removeSong(int(args[1]))
-
-            elif args[0] == "3":
+            elif cmd == "3":
                 client.listSongs()
 
-            elif args[0] == "4" and len(args) >= 3:
-                client.searchSongs(args[1], args[2])
+            elif cmd == "4":
+                client.searchSongs()
 
-            elif args[0] == "5" and len(args) >= 2:
-                client.playSong(int(args[1]))
+            elif cmd == "5":
+                client.playSong()
 
-            elif args[0] == "6" and len(args) >= 3:
-                client.addTagSong(args[1], args[2])
+            elif cmd == "6":
+                client.addTagSong()
 
-            elif args[0] == "7" and len(args) >= 3:
-                client.removeTagSong(args[1], args[2])
+            elif cmd == "7":
+                client.removeTagSong()
+
+            elif cmd == "8":
+                client.shutdown()
 
             else:
                 print("Commande non reconnue")
-        else:
-            print("Commande non reconnue")
+            # Fin if-elif-else
 
+        except:
+            traceback.print_exc()
+        # Fin try-catch
 
-        raw_input()
-        print("---------------------------------")
+        #raw_input()
+        print("="*80 + "\n")
         menu()
-        cmd = input(str("Choisir une option : "))
+        cmd = raw_input("Choisir une option : ")
 
     # Fin while
 

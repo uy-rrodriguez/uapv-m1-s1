@@ -20,7 +20,7 @@
 
 package ArchDistrib;
 
-public final class SongHolder extends Ice.ObjectHolderBase<Song>
+public final class SongHolder extends Ice.Holder<Song>
 {
     public
     SongHolder()
@@ -30,25 +30,6 @@ public final class SongHolder extends Ice.ObjectHolderBase<Song>
     public
     SongHolder(Song value)
     {
-        this.value = value;
-    }
-
-    public void
-    patch(Ice.Object v)
-    {
-        if(v == null || v instanceof Song)
-        {
-            value = (Song)v;
-        }
-        else
-        {
-            IceInternal.Ex.throwUOE(type(), v);
-        }
-    }
-
-    public String
-    type()
-    {
-        return Song.ice_staticId();
+        super(value);
     }
 }

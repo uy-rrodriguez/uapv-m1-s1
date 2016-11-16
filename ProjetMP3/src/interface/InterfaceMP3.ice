@@ -1,13 +1,13 @@
 module ArchDistrib {
 
-    class Tag {
+    struct Tag {
         string name;
     };
 
     sequence<float> DataSeq;
     sequence<Tag> TagSeq;
 
-    class Song {
+    struct Song {
         int id;
         string name;
         string artist;

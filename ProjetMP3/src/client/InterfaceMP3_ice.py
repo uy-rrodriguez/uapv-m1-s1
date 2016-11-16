@@ -28,50 +28,82 @@ __name__ = 'ArchDistrib'
 
 if 'Tag' not in _M_ArchDistrib.__dict__:
     _M_ArchDistrib.Tag = Ice.createTempClass()
-    class Tag(Ice.Object):
+    class Tag(object):
         def __init__(self, name=''):
             self.name = name
 
-        def ice_ids(self, current=None):
-            return ('::ArchDistrib::Tag', '::Ice::Object')
+        def __hash__(self):
+            _h = 0
+            _h = 5 * _h + Ice.getHash(self.name)
+            return _h % 0x7fffffff
 
-        def ice_id(self, current=None):
-            return '::ArchDistrib::Tag'
+        def __compare(self, other):
+            if other is None:
+                return 1
+            elif not isinstance(other, _M_ArchDistrib.Tag):
+                return NotImplemented
+            else:
+                if self.name is None or other.name is None:
+                    if self.name != other.name:
+                        return (-1 if self.name is None else 1)
+                else:
+                    if self.name < other.name:
+                        return -1
+                    elif self.name > other.name:
+                        return 1
+                return 0
 
-        def ice_staticId():
-            return '::ArchDistrib::Tag'
-        ice_staticId = staticmethod(ice_staticId)
+        def __lt__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r < 0
+
+        def __le__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r <= 0
+
+        def __gt__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r > 0
+
+        def __ge__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r >= 0
+
+        def __eq__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r == 0
+
+        def __ne__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r != 0
 
         def __str__(self):
             return IcePy.stringify(self, _M_ArchDistrib._t_Tag)
 
         __repr__ = __str__
 
-    _M_ArchDistrib.TagPrx = Ice.createTempClass()
-    class TagPrx(Ice.ObjectPrx):
-
-        def checkedCast(proxy, facetOrCtx=None, _ctx=None):
-            return _M_ArchDistrib.TagPrx.ice_checkedCast(proxy, '::ArchDistrib::Tag', facetOrCtx, _ctx)
-        checkedCast = staticmethod(checkedCast)
-
-        def uncheckedCast(proxy, facet=None):
-            return _M_ArchDistrib.TagPrx.ice_uncheckedCast(proxy, facet)
-        uncheckedCast = staticmethod(uncheckedCast)
-
-        def ice_staticId():
-            return '::ArchDistrib::Tag'
-        ice_staticId = staticmethod(ice_staticId)
-
-    _M_ArchDistrib._t_TagPrx = IcePy.defineProxy('::ArchDistrib::Tag', TagPrx)
-
-    _M_ArchDistrib._t_Tag = IcePy.defineClass('::ArchDistrib::Tag', Tag, -1, (), False, False, None, (), (('name', (), IcePy._t_string, False, 0),))
-    Tag._ice_type = _M_ArchDistrib._t_Tag
+    _M_ArchDistrib._t_Tag = IcePy.defineStruct('::ArchDistrib::Tag', Tag, (), (('name', (), IcePy._t_string),))
 
     _M_ArchDistrib.Tag = Tag
     del Tag
-
-    _M_ArchDistrib.TagPrx = TagPrx
-    del TagPrx
 
 if '_t_DataSeq' not in _M_ArchDistrib.__dict__:
     _M_ArchDistrib._t_DataSeq = IcePy.defineSequence('::ArchDistrib::DataSeq', (), IcePy._t_float)
@@ -81,7 +113,7 @@ if '_t_TagSeq' not in _M_ArchDistrib.__dict__:
 
 if 'Song' not in _M_ArchDistrib.__dict__:
     _M_ArchDistrib.Song = Ice.createTempClass()
-    class Song(Ice.Object):
+    class Song(object):
         def __init__(self, id=0, name='', artist='', path='', tags=None):
             self.id = id
             self.name = name
@@ -89,54 +121,122 @@ if 'Song' not in _M_ArchDistrib.__dict__:
             self.path = path
             self.tags = tags
 
-        def ice_ids(self, current=None):
-            return ('::ArchDistrib::Song', '::Ice::Object')
+        def __hash__(self):
+            _h = 0
+            _h = 5 * _h + Ice.getHash(self.id)
+            _h = 5 * _h + Ice.getHash(self.name)
+            _h = 5 * _h + Ice.getHash(self.artist)
+            _h = 5 * _h + Ice.getHash(self.path)
+            if self.tags:
+                for _i0 in self.tags:
+                    _h = 5 * _h + Ice.getHash(_i0)
+            return _h % 0x7fffffff
 
-        def ice_id(self, current=None):
-            return '::ArchDistrib::Song'
+        def __compare(self, other):
+            if other is None:
+                return 1
+            elif not isinstance(other, _M_ArchDistrib.Song):
+                return NotImplemented
+            else:
+                if self.id is None or other.id is None:
+                    if self.id != other.id:
+                        return (-1 if self.id is None else 1)
+                else:
+                    if self.id < other.id:
+                        return -1
+                    elif self.id > other.id:
+                        return 1
+                if self.name is None or other.name is None:
+                    if self.name != other.name:
+                        return (-1 if self.name is None else 1)
+                else:
+                    if self.name < other.name:
+                        return -1
+                    elif self.name > other.name:
+                        return 1
+                if self.artist is None or other.artist is None:
+                    if self.artist != other.artist:
+                        return (-1 if self.artist is None else 1)
+                else:
+                    if self.artist < other.artist:
+                        return -1
+                    elif self.artist > other.artist:
+                        return 1
+                if self.path is None or other.path is None:
+                    if self.path != other.path:
+                        return (-1 if self.path is None else 1)
+                else:
+                    if self.path < other.path:
+                        return -1
+                    elif self.path > other.path:
+                        return 1
+                if self.tags is None or other.tags is None:
+                    if self.tags != other.tags:
+                        return (-1 if self.tags is None else 1)
+                else:
+                    if self.tags < other.tags:
+                        return -1
+                    elif self.tags > other.tags:
+                        return 1
+                return 0
 
-        def ice_staticId():
-            return '::ArchDistrib::Song'
-        ice_staticId = staticmethod(ice_staticId)
+        def __lt__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r < 0
+
+        def __le__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r <= 0
+
+        def __gt__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r > 0
+
+        def __ge__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r >= 0
+
+        def __eq__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r == 0
+
+        def __ne__(self, other):
+            r = self.__compare(other)
+            if r is NotImplemented:
+                return r
+            else:
+                return r != 0
 
         def __str__(self):
             return IcePy.stringify(self, _M_ArchDistrib._t_Song)
 
         __repr__ = __str__
 
-    _M_ArchDistrib.SongPrx = Ice.createTempClass()
-    class SongPrx(Ice.ObjectPrx):
-
-        def checkedCast(proxy, facetOrCtx=None, _ctx=None):
-            return _M_ArchDistrib.SongPrx.ice_checkedCast(proxy, '::ArchDistrib::Song', facetOrCtx, _ctx)
-        checkedCast = staticmethod(checkedCast)
-
-        def uncheckedCast(proxy, facet=None):
-            return _M_ArchDistrib.SongPrx.ice_uncheckedCast(proxy, facet)
-        uncheckedCast = staticmethod(uncheckedCast)
-
-        def ice_staticId():
-            return '::ArchDistrib::Song'
-        ice_staticId = staticmethod(ice_staticId)
-
-    _M_ArchDistrib._t_SongPrx = IcePy.defineProxy('::ArchDistrib::Song', SongPrx)
-
-    _M_ArchDistrib._t_Song = IcePy.declareClass('::ArchDistrib::Song')
-
-    _M_ArchDistrib._t_Song = IcePy.defineClass('::ArchDistrib::Song', Song, -1, (), False, False, None, (), (
-        ('id', (), IcePy._t_int, False, 0),
-        ('name', (), IcePy._t_string, False, 0),
-        ('artist', (), IcePy._t_string, False, 0),
-        ('path', (), IcePy._t_string, False, 0),
-        ('tags', (), _M_ArchDistrib._t_TagSeq, False, 0)
+    _M_ArchDistrib._t_Song = IcePy.defineStruct('::ArchDistrib::Song', Song, (), (
+        ('id', (), IcePy._t_int),
+        ('name', (), IcePy._t_string),
+        ('artist', (), IcePy._t_string),
+        ('path', (), IcePy._t_string),
+        ('tags', (), _M_ArchDistrib._t_TagSeq)
     ))
-    Song._ice_type = _M_ArchDistrib._t_Song
 
     _M_ArchDistrib.Song = Song
     del Song
-
-    _M_ArchDistrib.SongPrx = SongPrx
-    del SongPrx
 
 if '_t_SongSeq' not in _M_ArchDistrib.__dict__:
     _M_ArchDistrib._t_SongSeq = IcePy.defineSequence('::ArchDistrib::SongSeq', (), _M_ArchDistrib._t_Song)

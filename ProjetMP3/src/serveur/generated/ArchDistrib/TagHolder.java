@@ -20,7 +20,7 @@
 
 package ArchDistrib;
 
-public final class TagHolder extends Ice.ObjectHolderBase<Tag>
+public final class TagHolder extends Ice.Holder<Tag>
 {
     public
     TagHolder()
@@ -30,25 +30,6 @@ public final class TagHolder extends Ice.ObjectHolderBase<Tag>
     public
     TagHolder(Tag value)
     {
-        this.value = value;
-    }
-
-    public void
-    patch(Ice.Object v)
-    {
-        if(v == null || v instanceof Tag)
-        {
-            value = (Tag)v;
-        }
-        else
-        {
-            IceInternal.Ex.throwUOE(type(), v);
-        }
-    }
-
-    public String
-    type()
-    {
-        return Tag.ice_staticId();
+        super(value);
     }
 }
