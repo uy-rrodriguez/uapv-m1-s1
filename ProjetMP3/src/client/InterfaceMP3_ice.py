@@ -82,10 +82,11 @@ if '_t_TagSeq' not in _M_ArchDistrib.__dict__:
 if 'Song' not in _M_ArchDistrib.__dict__:
     _M_ArchDistrib.Song = Ice.createTempClass()
     class Song(Ice.Object):
-        def __init__(self, name='', artist='', data=None, tags=None):
+        def __init__(self, id=0, name='', artist='', path='', tags=None):
+            self.id = id
             self.name = name
             self.artist = artist
-            self.data = data
+            self.path = path
             self.tags = tags
 
         def ice_ids(self, current=None):
@@ -123,9 +124,10 @@ if 'Song' not in _M_ArchDistrib.__dict__:
     _M_ArchDistrib._t_Song = IcePy.declareClass('::ArchDistrib::Song')
 
     _M_ArchDistrib._t_Song = IcePy.defineClass('::ArchDistrib::Song', Song, -1, (), False, False, None, (), (
+        ('id', (), IcePy._t_int, False, 0),
         ('name', (), IcePy._t_string, False, 0),
         ('artist', (), IcePy._t_string, False, 0),
-        ('data', (), _M_ArchDistrib._t_DataSeq, False, 0),
+        ('path', (), IcePy._t_string, False, 0),
         ('tags', (), _M_ArchDistrib._t_TagSeq, False, 0)
     ))
     Song._ice_type = _M_ArchDistrib._t_Song
@@ -136,55 +138,8 @@ if 'Song' not in _M_ArchDistrib.__dict__:
     _M_ArchDistrib.SongPrx = SongPrx
     del SongPrx
 
-if 'SongModel' not in _M_ArchDistrib.__dict__:
-    _M_ArchDistrib.SongModel = Ice.createTempClass()
-    class SongModel(_M_ArchDistrib.Song):
-        def __init__(self, name='', artist='', data=None, tags=None, path=''):
-            _M_ArchDistrib.Song.__init__(self, name, artist, data, tags)
-            self.path = path
-
-        def ice_ids(self, current=None):
-            return ('::ArchDistrib::Song', '::ArchDistrib::SongModel', '::Ice::Object')
-
-        def ice_id(self, current=None):
-            return '::ArchDistrib::SongModel'
-
-        def ice_staticId():
-            return '::ArchDistrib::SongModel'
-        ice_staticId = staticmethod(ice_staticId)
-
-        def __str__(self):
-            return IcePy.stringify(self, _M_ArchDistrib._t_SongModel)
-
-        __repr__ = __str__
-
-    _M_ArchDistrib.SongModelPrx = Ice.createTempClass()
-    class SongModelPrx(_M_ArchDistrib.SongPrx):
-
-        def checkedCast(proxy, facetOrCtx=None, _ctx=None):
-            return _M_ArchDistrib.SongModelPrx.ice_checkedCast(proxy, '::ArchDistrib::SongModel', facetOrCtx, _ctx)
-        checkedCast = staticmethod(checkedCast)
-
-        def uncheckedCast(proxy, facet=None):
-            return _M_ArchDistrib.SongModelPrx.ice_uncheckedCast(proxy, facet)
-        uncheckedCast = staticmethod(uncheckedCast)
-
-        def ice_staticId():
-            return '::ArchDistrib::SongModel'
-        ice_staticId = staticmethod(ice_staticId)
-
-    _M_ArchDistrib._t_SongModelPrx = IcePy.defineProxy('::ArchDistrib::SongModel', SongModelPrx)
-
-    _M_ArchDistrib._t_SongModel = IcePy.declareClass('::ArchDistrib::SongModel')
-
-    _M_ArchDistrib._t_SongModel = IcePy.defineClass('::ArchDistrib::SongModel', SongModel, -1, (), False, False, _M_ArchDistrib._t_Song, (), (('path', (), IcePy._t_string, False, 0),))
-    SongModel._ice_type = _M_ArchDistrib._t_SongModel
-
-    _M_ArchDistrib.SongModel = SongModel
-    del SongModel
-
-    _M_ArchDistrib.SongModelPrx = SongModelPrx
-    del SongModelPrx
+if '_t_SongSeq' not in _M_ArchDistrib.__dict__:
+    _M_ArchDistrib._t_SongSeq = IcePy.defineSequence('::ArchDistrib::SongSeq', (), _M_ArchDistrib._t_Song)
 
 if 'InterfaceMP3' not in _M_ArchDistrib.__dict__:
     _M_ArchDistrib.InterfaceMP3 = Ice.createTempClass()
@@ -203,7 +158,28 @@ if 'InterfaceMP3' not in _M_ArchDistrib.__dict__:
             return '::ArchDistrib::InterfaceMP3'
         ice_staticId = staticmethod(ice_staticId)
 
-        def printString(self, s, current=None):
+        def addSong(self, name, artist, path, current=None):
+            pass
+
+        def removeSong(self, id, current=None):
+            pass
+
+        def listSongs(self, current=None):
+            pass
+
+        def searchSongs(self, nameRegex, artistRegex, current=None):
+            pass
+
+        def playSong(self, id, current=None):
+            pass
+
+        def addTagSong(self, id, name, current=None):
+            pass
+
+        def removeTagSong(self, id, name, current=None):
+            pass
+
+        def shutdown(self, current=None):
             pass
 
         def __str__(self):
@@ -214,14 +190,77 @@ if 'InterfaceMP3' not in _M_ArchDistrib.__dict__:
     _M_ArchDistrib.InterfaceMP3Prx = Ice.createTempClass()
     class InterfaceMP3Prx(Ice.ObjectPrx):
 
-        def printString(self, s, _ctx=None):
-            return _M_ArchDistrib.InterfaceMP3._op_printString.invoke(self, ((s, ), _ctx))
+        def addSong(self, name, artist, path, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_addSong.invoke(self, ((name, artist, path), _ctx))
 
-        def begin_printString(self, s, _response=None, _ex=None, _sent=None, _ctx=None):
-            return _M_ArchDistrib.InterfaceMP3._op_printString.begin(self, ((s, ), _response, _ex, _sent, _ctx))
+        def begin_addSong(self, name, artist, path, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_addSong.begin(self, ((name, artist, path), _response, _ex, _sent, _ctx))
 
-        def end_printString(self, _r):
-            return _M_ArchDistrib.InterfaceMP3._op_printString.end(self, _r)
+        def end_addSong(self, _r):
+            return _M_ArchDistrib.InterfaceMP3._op_addSong.end(self, _r)
+
+        def removeSong(self, id, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_removeSong.invoke(self, ((id, ), _ctx))
+
+        def begin_removeSong(self, id, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_removeSong.begin(self, ((id, ), _response, _ex, _sent, _ctx))
+
+        def end_removeSong(self, _r):
+            return _M_ArchDistrib.InterfaceMP3._op_removeSong.end(self, _r)
+
+        def listSongs(self, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_listSongs.invoke(self, ((), _ctx))
+
+        def begin_listSongs(self, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_listSongs.begin(self, ((), _response, _ex, _sent, _ctx))
+
+        def end_listSongs(self, _r):
+            return _M_ArchDistrib.InterfaceMP3._op_listSongs.end(self, _r)
+
+        def searchSongs(self, nameRegex, artistRegex, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_searchSongs.invoke(self, ((nameRegex, artistRegex), _ctx))
+
+        def begin_searchSongs(self, nameRegex, artistRegex, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_searchSongs.begin(self, ((nameRegex, artistRegex), _response, _ex, _sent, _ctx))
+
+        def end_searchSongs(self, _r):
+            return _M_ArchDistrib.InterfaceMP3._op_searchSongs.end(self, _r)
+
+        def playSong(self, id, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_playSong.invoke(self, ((id, ), _ctx))
+
+        def begin_playSong(self, id, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_playSong.begin(self, ((id, ), _response, _ex, _sent, _ctx))
+
+        def end_playSong(self, _r):
+            return _M_ArchDistrib.InterfaceMP3._op_playSong.end(self, _r)
+
+        def addTagSong(self, id, name, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_addTagSong.invoke(self, ((id, name), _ctx))
+
+        def begin_addTagSong(self, id, name, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_addTagSong.begin(self, ((id, name), _response, _ex, _sent, _ctx))
+
+        def end_addTagSong(self, _r):
+            return _M_ArchDistrib.InterfaceMP3._op_addTagSong.end(self, _r)
+
+        def removeTagSong(self, id, name, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_removeTagSong.invoke(self, ((id, name), _ctx))
+
+        def begin_removeTagSong(self, id, name, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_removeTagSong.begin(self, ((id, name), _response, _ex, _sent, _ctx))
+
+        def end_removeTagSong(self, _r):
+            return _M_ArchDistrib.InterfaceMP3._op_removeTagSong.end(self, _r)
+
+        def shutdown(self, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_shutdown.invoke(self, ((), _ctx))
+
+        def begin_shutdown(self, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_shutdown.begin(self, ((), _response, _ex, _sent, _ctx))
+
+        def end_shutdown(self, _r):
+            return _M_ArchDistrib.InterfaceMP3._op_shutdown.end(self, _r)
 
         def checkedCast(proxy, facetOrCtx=None, _ctx=None):
             return _M_ArchDistrib.InterfaceMP3Prx.ice_checkedCast(proxy, '::ArchDistrib::InterfaceMP3', facetOrCtx, _ctx)
@@ -240,7 +279,14 @@ if 'InterfaceMP3' not in _M_ArchDistrib.__dict__:
     _M_ArchDistrib._t_InterfaceMP3 = IcePy.defineClass('::ArchDistrib::InterfaceMP3', InterfaceMP3, -1, (), True, False, None, (), ())
     InterfaceMP3._ice_type = _M_ArchDistrib._t_InterfaceMP3
 
-    InterfaceMP3._op_printString = IcePy.Operation('printString', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_string, False, 0),), (), None, ())
+    InterfaceMP3._op_addSong = IcePy.Operation('addSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_string, False, 0), ((), IcePy._t_string, False, 0), ((), IcePy._t_string, False, 0)), (), None, ())
+    InterfaceMP3._op_removeSong = IcePy.Operation('removeSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_int, False, 0),), (), None, ())
+    InterfaceMP3._op_listSongs = IcePy.Operation('listSongs', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (), (), ((), _M_ArchDistrib._t_SongSeq, False, 0), ())
+    InterfaceMP3._op_searchSongs = IcePy.Operation('searchSongs', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_string, False, 0), ((), IcePy._t_string, False, 0)), (), ((), _M_ArchDistrib._t_SongSeq, False, 0), ())
+    InterfaceMP3._op_playSong = IcePy.Operation('playSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_int, False, 0),), (), ((), _M_ArchDistrib._t_DataSeq, False, 0), ())
+    InterfaceMP3._op_addTagSong = IcePy.Operation('addTagSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_int, False, 0), ((), IcePy._t_string, False, 0)), (), None, ())
+    InterfaceMP3._op_removeTagSong = IcePy.Operation('removeTagSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_int, False, 0), ((), IcePy._t_string, False, 0)), (), None, ())
+    InterfaceMP3._op_shutdown = IcePy.Operation('shutdown', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (), (), None, ())
 
     _M_ArchDistrib.InterfaceMP3 = InterfaceMP3
     del InterfaceMP3
