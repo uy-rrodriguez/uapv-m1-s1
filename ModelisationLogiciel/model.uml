@@ -95,9 +95,12 @@
                 <lifeline xmi:type="uml:Lifeline" xmi:id="_FR9-0JVAEeaLx-chSQiKlw" name=":ClockFactory" coveredBy="_sqnNsKTZEeaTVP7T5g5wUQ _jwCOUJVBEeaLx-chSQiKlw _sqpp8KTZEeaTVP7T5g5wUQ _jmIEYJVBEeaLx-chSQiKlw _jwBnQJVBEeaLx-chSQiKlw _tmtNEKTaEeaTVP7T5g5wUQ _tmvCQKTaEeaTVP7T5g5wUQ"/>
                 <lifeline xmi:type="uml:Lifeline" xmi:id="_JJ1BMJVAEeaLx-chSQiKlw" name=":Clock" coveredBy="_sqnNsKTZEeaTVP7T5g5wUQ _uvrywJVBEeaLx-chSQiKlw _u5GNcJVBEeaLx-chSQiKlw _sqpp8KTZEeaTVP7T5g5wUQ _u5E_UJVBEeaLx-chSQiKlw _5R7MIKTcEeaTVP7T5g5wUQ _tmtNEKTaEeaTVP7T5g5wUQ _5d3WYKTcEeaTVP7T5g5wUQ _5d2IQKTcEeaTVP7T5g5wUQ _tmvCQKTaEeaTVP7T5g5wUQ"/>
                 <lifeline xmi:type="uml:Lifeline" xmi:id="_KgkxsJVAEeaLx-chSQiKlw" name=":DisplayEvent" coveredBy="_sqnNsKTZEeaTVP7T5g5wUQ _0bZYYJVBEeaLx-chSQiKlw _0kcmsJVBEeaLx-chSQiKlw _0kb_oJVBEeaLx-chSQiKlw _sqpp8KTZEeaTVP7T5g5wUQ _WbBesKTcEeaTVP7T5g5wUQ _waHd8KTcEeaTVP7T5g5wUQ _sme0QKTcEeaTVP7T5g5wUQ _tmtNEKTaEeaTVP7T5g5wUQ _tmvCQKTaEeaTVP7T5g5wUQ _smfbUKTcEeaTVP7T5g5wUQ"/>
+                <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_WbBesKTcEeaTVP7T5g5wUQ" name="BehaviorExecSpecStart" covered="_KgkxsJVAEeaLx-chSQiKlw"/>
+                <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_UKgq8JVBEeaLx-chSQiKlw" name="MessageRecv0" covered="_CsCeYJVAEeaLx-chSQiKlw" message="_UKeOsJVBEeaLx-chSQiKlw"/>
+                <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_pMqrkJVAEeaLx-chSQiKlw" name="MessageRecv" covered="_CsCeYJVAEeaLx-chSQiKlw"/>
+                <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_nOaPIJVAEeaLx-chSQiKlw" name="MessageSend" covered="__2xhcJU_EeaLx-chSQiKlw"/>
                 <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_UKfc0JVBEeaLx-chSQiKlw" name="MessageSend1" covered="__2xhcJU_EeaLx-chSQiKlw" message="_UKeOsJVBEeaLx-chSQiKlw"/>
                 <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_US7AEJVBEeaLx-chSQiKlw" name="ActionExecSpec0" covered="_CsCeYJVAEeaLx-chSQiKlw" finish="_US7nIJVBEeaLx-chSQiKlw" start="_UKgq8JVBEeaLx-chSQiKlw"/>
-                <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_UKgq8JVBEeaLx-chSQiKlw" name="MessageRecv0" covered="_CsCeYJVAEeaLx-chSQiKlw" message="_UKeOsJVBEeaLx-chSQiKlw"/>
                 <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_US7nIJVBEeaLx-chSQiKlw" name="ActionExecSpec0Finish" covered="_CsCeYJVAEeaLx-chSQiKlw" execution="_US7AEJVBEeaLx-chSQiKlw"/>
                 <fragment xmi:type="uml:CombinedFragment" xmi:id="_sqnNsKTZEeaTVP7T5g5wUQ" name="CombinedFragment" covered="_JJ1BMJVAEeaLx-chSQiKlw _FR9-0JVAEeaLx-chSQiKlw _CsCeYJVAEeaLx-chSQiKlw _KgkxsJVAEeaLx-chSQiKlw __2xhcJU_EeaLx-chSQiKlw" interactionOperator="loop">
                   <operand xmi:type="uml:InteractionOperand" xmi:id="_sqpp8KTZEeaTVP7T5g5wUQ" name="InteractionOperand" covered="_JJ1BMJVAEeaLx-chSQiKlw _FR9-0JVAEeaLx-chSQiKlw _CsCeYJVAEeaLx-chSQiKlw _KgkxsJVAEeaLx-chSQiKlw __2xhcJU_EeaLx-chSQiKlw">
@@ -139,9 +142,6 @@
                   </operand>
                 </fragment>
                 <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_pMpdcJVAEeaLx-chSQiKlw" name="MessageSend0" covered="__2xhcJU_EeaLx-chSQiKlw"/>
-                <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_pMqrkJVAEeaLx-chSQiKlw" name="MessageRecv" covered="_CsCeYJVAEeaLx-chSQiKlw"/>
-                <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_WbBesKTcEeaTVP7T5g5wUQ" name="BehaviorExecSpecStart" covered="_KgkxsJVAEeaLx-chSQiKlw"/>
-                <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_nOaPIJVAEeaLx-chSQiKlw" name="MessageSend" covered="__2xhcJU_EeaLx-chSQiKlw"/>
                 <message xmi:type="uml:Message" xmi:id="_UKeOsJVBEeaLx-chSQiKlw" name="create(long, long, int, int)" receiveEvent="_UKgq8JVBEeaLx-chSQiKlw" sendEvent="_UKfc0JVBEeaLx-chSQiKlw"/>
                 <message xmi:type="uml:Message" xmi:id="_jmFoIJVBEeaLx-chSQiKlw" name="createClock(String, long, BufferedWriter)" receiveEvent="_jmIEYJVBEeaLx-chSQiKlw" sendEvent="_jmG2QJVBEeaLx-chSQiKlw"/>
                 <message xmi:type="uml:Message" xmi:id="_uvpWgJVBEeaLx-chSQiKlw" name="Clock(String, BufferedWriter)" receiveEvent="_uvrywJVBEeaLx-chSQiKlw" sendEvent="_uvqkoJVBEeaLx-chSQiKlw"/>
