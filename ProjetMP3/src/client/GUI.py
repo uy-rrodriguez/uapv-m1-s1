@@ -6,12 +6,77 @@ syspath.append(os.path.join(os.path.dirname(__file__), "lib"))
 import pygame
 
 COLOR_BACKGROUND = (6,19,25,0)
+FONT = None
 
-class Button(pygame.sprite.Sprite):
-  def __init__(self, img):
+class WidgetCollection:
+  buttons = []
+  button_over = None
+
+  @staticmethod
+  def deactivate_all():
+    for b in WidgetCollection.buttons:
+      b.deactivate()
+
+  @staticmethod
+  def checkButtonClick(evtOnClick):
+    for b in WidgetCollection.buttons:
+      if b.is_active() and b.rect.collidepoint(evtOnClick.pos):
+        b.doClick()
+        return
+
+  @staticmethod
+  def checkMouseOverButton(evtMouseMotion):
+    b = WidgetCollection.button_over
+    if (b != None and b.is_active()
+        and not b.rect.collidepoint(evtMouseMotion.pos)):
+      WidgetCollection.button_over.doMouseOut()
+      WidgetCollection.button_over = None
+
+    for b in WidgetCollection.buttons:
+      if b.is_active() and b.rect.collidepoint(evtMouseMotion.pos):
+        b.doMouseOver()
+        WidgetCollection.button_over = b
+        return
+
+
+class MyWidget(pygame.sprite.Sprite):
+  def __init__(self, parent, img):
     pygame.sprite.Sprite.__init__(self)
+    self.parent = parent
     self.image = pygame.image.load(img).convert_alpha()
     self.rect = self.image.get_rect()
+    self.active = False
+
+  def is_active(self):
+    return self.active
+
+  def activate(self):
+    self.active = True
+
+  def deactivate(self):
+    self.active = False
+
+  def repaint(self):
+    self.parent.screen.fill(COLOR_BACKGROUND, self.rect)
+    self.parent.screen.blit(self.image, (self.rect.x, self.rect.y))
+
+
+class Button(MyWidget):
+  def __init__(self, parent, img, clickCallback = lambda: "Not implemented"):
+    MyWidget.__init__(self, parent, img)
+    WidgetCollection.buttons.append(self)
+
+    self.doClick = clickCallback
+
+    self.label = self.parent.font_button.render(('CLICK!'), True, (255,255,255))
+    self.label_rect = self.label.get_rect()
+
+  def doMouseOver(self):
+    self.label_rect.center = self.rect.center
+    self.parent.screen.blit(self.label, self.label_rect)
+
+  def doMouseOut(self):
+    self.repaint()
 
 
 class App():
@@ -22,27 +87,18 @@ class App():
     pygame.init()
     self.screen = pygame.display.set_mode((400, 600))
 
-    # Images
-    self.logo       = Button("img/logo.png")
-    self.like       = Button("img/heart.png")
-    self.songlist   = Button("img/list.png")
-    self.melody     = Button("img/melody.png")
-    self.pause      = Button("img/pause.png")
-    self.play       = Button("img/play.png")
-    self.power      = Button("img/power.png")
-    self.reloadlist = Button("img/reload.png")
-    self.search     = Button("img/search.png")
-    self.sound      = Button("img/sound.png")
-    self.tags       = Button("img/tags.png")
-    self.upload     = Button("img/upload.png")
+    # Polices utilisees
+    self.font_button = pygame.font.SysFont('Arial', 14, 16)
 
-    # Liste de boutons
-    self.buttons = [self.logo, self.like, self.songlist, self.melody,
-                    self.pause, self.play, self.power, self.reloadlist,
-                    self.search, self.sound, self.tags, self.upload]
+    # On utilise "statique" une classe qui gere les controles (buttons, etc.)
+    # WidgetCollection
+
+    # Creation des controles
+    self.createWidgets()
 
     # Main menu
-    self.changeScreen(self.main)
+    self.changeScreen(self.frameMainMenu)
+    self.changeScreen(self.frameSongList)
 
 
     # fond = pygame.image.load("background.jpg").convert()
@@ -69,7 +125,34 @@ class App():
 
     #self.master.title("Client MP3")
     #self.grid()
-    #self.createWidgets()
+
+
+  def exit(self):
+    pygame.event.clear()
+    pygame.event.post(pygame.event.Event(pygame.QUIT))
+
+  def onClickPower(self):
+    self.exit()
+
+  def onClickSongList(self):
+    self.changeScreen(self.frameSongList)
+
+  def onClickLogo(self):
+    self.changeScreen(self.frameMainMenu)
+
+  def createWidgets(self):
+    self.logo       = Button(self, "img/logo.png",    self.onClickLogo)
+    self.like       = Button(self, "img/heart.png")
+    self.songlist   = Button(self, "img/list.png",    self.onClickSongList)
+    self.melody     = Button(self, "img/melody.png")
+    self.pause      = Button(self, "img/pause.png")
+    self.play       = Button(self, "img/play.png")
+    self.power      = Button(self, "img/power.png",   self.onClickPower)
+    self.reloadlist = Button(self, "img/reload.png")
+    self.search     = Button(self, "img/search.png")
+    self.sound      = Button(self, "img/sound.png")
+    self.tags       = Button(self, "img/tags.png")
+    self.upload     = Button(self, "img/upload.png")
 
 
   '''
@@ -77,27 +160,28 @@ class App():
   --------------------------------------------------------------------------------
   '''
   def changeScreen(self, callback):
+    WidgetCollection.deactivate_all()
     self.screen.fill(COLOR_BACKGROUND)
     callback()
-    pygame.display.flip()
 
 
   '''
     Affichage en forme de tableau
   --------------------------------------------------------------------------------
   '''
-  def grid(self, elements=[], center=True, margin=0, left=0, top=0):
+  def grid(self, elements=[], centerX=True, centerY=True, margin=0, left=0, top=0):
     surf = pygame.Surface((self.screen.get_width(), self.screen.get_height()))
     surf.fill(COLOR_BACKGROUND)
-    width = left
-    height = top
+    width = 0
+    height = 0
 
     # affichage des elements et calcul de la taille necessaire pour la surface
     for row in elements:
-      row_width = left
+      row_width = 0
       row_height = height
 
       for cell in row:
+        cell.activate()
         surf.blit(cell.image, (row_width, height))
         rect = cell.rect
         rect.x = row_width
@@ -109,8 +193,20 @@ class App():
       width = max(width, row_width)
       height += row_height
 
+    width = min(width, surf.get_rect().w)
+    height = min(height, surf.get_rect().h)
     sub = surf.subsurface((0, 0, width, height))
-    final_rect = sub.get_rect(center = self.screen.get_rect().center)
+
+    # Peut-etre on veut centrer les controles
+    screen_center = self.screen.get_rect().center
+    if centerX and centerY:
+      final_rect = sub.get_rect(center = screen_center)
+    elif centerX:
+      final_rect = sub.get_rect(x = screen_center[0]-width/2, y = top)
+    elif centerY:
+      final_rect = sub.get_rect(x = left, y = screen_center[1]-height/2)
+    else:
+      final_rect = sub.get_rect(x = left, y = top)
 
     # Mise a jour de la position des elements
     for row in elements:
@@ -123,13 +219,24 @@ class App():
 
 
   '''
-    Main menu
+    Frame Main menu
   --------------------------------------------------------------------------------
   '''
-  def main(self):
+  def frameMainMenu(self):
     self.grid([[self.play, self.songlist, self.search],
                [self.upload, self.logo, self.power]],
-              True, 10)
+              True, True, 10)
+
+
+  '''
+    Frame Liste de chansons
+  --------------------------------------------------------------------------------
+  '''
+  def frameSongList(self):
+    self.grid([[self.play, self.reloadlist]],
+              False, False, 10, left = 10, top = 520)
+    self.grid([[self.logo]],
+              False, False, 10, left = 320, top = 520)
 
 
   '''
@@ -143,13 +250,18 @@ class App():
           return 0
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-          check = lambda btn: btn.rect.collidepoint(event.pos)
-          if (check(self.power)):
-            return 0
+          WidgetCollection.checkButtonClick(event)
+
+        elif event.type == pygame.MOUSEMOTION:
+          WidgetCollection.checkMouseOverButton(event)
 
 
+      # Refresh screen
+      pygame.display.flip()
 
   #def createWidgets(self):
   #  self.quitButton = tk.Button(self, text="Quit", command=self.quit)
   #  self.quitButton.grid()
 
+
+App(None).mainloop()
