@@ -1,8 +1,10 @@
 import traceback
+from Player import Player
 
 class App:
   def __init__(self, srvProxy):
     self.srv = srvProxy
+    self.player = Player("1233")
 
 
   def mainloop(self):
@@ -29,13 +31,14 @@ class App:
           self.playSong()
 
         elif cmd == "6":
-          self.addTagSong()
+          self.stopSong()
 
-        elif cmd == "7":
-          self.removeTagSong()
-
-        elif cmd == "8":
-          self.shutdown()
+        #
+        #elif cmd == "7":
+        #  self.addTagSong()
+        #
+        #elif cmd == "8":
+        #  self.removeTagSong()
 
         else:
           print("Commande non reconnue")
@@ -60,9 +63,9 @@ class App:
     print("3 - listSongs")
     print("4 - searchSongs \t : nameRegex artistRegex")
     print("5 - playSong \t\t : id")
-    print("6 - addTagSong \t\t : id name")
-    print("7 - removeTagSong \t : id name")
-    print("8 - shutdown")
+    print("6 - stopSong \t\t")
+    # print("7 - addTagSong \t\t : id name")
+    # print("8 - removeTagSong \t : id name")
     print("0 - Fermer le programme")
 
 
@@ -76,9 +79,10 @@ class App:
   def printSongList(self, songs):
     print "\n", "-"*60
     print "Liste de chansons :"
-    print "\t\t".join(["ID", "Nom", "Artiste", "Tags"])
+    print "\t\t".join(["ID", "Nom", "Artiste"])
     for s in songs:
-      print "\t\t".join([str(s.id), s.name, s.artist, "[" + ", ".join(s.tags) + "]"])
+      print "\t\t".join([str(s.id), s.name, s.artist])
+      #print "\t\t".join([str(s.id), s.name, s.artist, "[" + ", ".join(s.tags) + "]"])
 
     print "\n"
 
@@ -111,7 +115,30 @@ class App:
   def playSong(self):
     #print("playSong id=" + str(id))
     values = self.askForParams(["id"])
-    self.srv.playSong(int(values["id"]))
+
+    try:
+      # Appel au serveur pour qu'il commence le streaming
+      self.srv.playSong(int(values["id"]))
+
+      # Lecture du streaming
+      self.player.stop()
+      self.player.play()
+
+    except Exception as e:
+      pass
+
+
+  def stopSong(self):
+    #print("stopSong")
+    try:
+      # Appel au serveur pour qu'il commence le streaming
+      self.srv.stopSong()
+
+      # Arret de lecture du streaming
+      self.player.stop()
+
+    except Exception as e:
+      pass
 
 
   def addTagSong(self):
@@ -124,9 +151,4 @@ class App:
     #print("removeTagSong id=" + str(id) + "; name=" + name)
     values = self.askForParams(["id", "name"])
     self.srv.removeTagSong(int(values["id"]), values["name"])
-
-
-  def shutdown(self):
-    #print("shutdown")
-    self.srv.shutdown()
 

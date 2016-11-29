@@ -273,13 +273,13 @@ if 'InterfaceMP3' not in _M_ArchDistrib.__dict__:
         def playSong(self, id, current=None):
             pass
 
+        def stopSong(self, current=None):
+            pass
+
         def addTagSong(self, id, name, current=None):
             pass
 
         def removeTagSong(self, id, name, current=None):
-            pass
-
-        def shutdown(self, current=None):
             pass
 
         def __str__(self):
@@ -335,6 +335,15 @@ if 'InterfaceMP3' not in _M_ArchDistrib.__dict__:
         def end_playSong(self, _r):
             return _M_ArchDistrib.InterfaceMP3._op_playSong.end(self, _r)
 
+        def stopSong(self, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_stopSong.invoke(self, ((), _ctx))
+
+        def begin_stopSong(self, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_ArchDistrib.InterfaceMP3._op_stopSong.begin(self, ((), _response, _ex, _sent, _ctx))
+
+        def end_stopSong(self, _r):
+            return _M_ArchDistrib.InterfaceMP3._op_stopSong.end(self, _r)
+
         def addTagSong(self, id, name, _ctx=None):
             return _M_ArchDistrib.InterfaceMP3._op_addTagSong.invoke(self, ((id, name), _ctx))
 
@@ -352,15 +361,6 @@ if 'InterfaceMP3' not in _M_ArchDistrib.__dict__:
 
         def end_removeTagSong(self, _r):
             return _M_ArchDistrib.InterfaceMP3._op_removeTagSong.end(self, _r)
-
-        def shutdown(self, _ctx=None):
-            return _M_ArchDistrib.InterfaceMP3._op_shutdown.invoke(self, ((), _ctx))
-
-        def begin_shutdown(self, _response=None, _ex=None, _sent=None, _ctx=None):
-            return _M_ArchDistrib.InterfaceMP3._op_shutdown.begin(self, ((), _response, _ex, _sent, _ctx))
-
-        def end_shutdown(self, _r):
-            return _M_ArchDistrib.InterfaceMP3._op_shutdown.end(self, _r)
 
         def checkedCast(proxy, facetOrCtx=None, _ctx=None):
             return _M_ArchDistrib.InterfaceMP3Prx.ice_checkedCast(proxy, '::ArchDistrib::InterfaceMP3', facetOrCtx, _ctx)
@@ -383,10 +383,10 @@ if 'InterfaceMP3' not in _M_ArchDistrib.__dict__:
     InterfaceMP3._op_removeSong = IcePy.Operation('removeSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_int, False, 0),), (), None, ())
     InterfaceMP3._op_listSongs = IcePy.Operation('listSongs', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (), (), ((), _M_ArchDistrib._t_SongSeq, False, 0), ())
     InterfaceMP3._op_searchSongs = IcePy.Operation('searchSongs', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_string, False, 0), ((), IcePy._t_string, False, 0)), (), ((), _M_ArchDistrib._t_SongSeq, False, 0), ())
-    InterfaceMP3._op_playSong = IcePy.Operation('playSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_int, False, 0),), (), ((), _M_ArchDistrib._t_DataSeq, False, 0), ())
+    InterfaceMP3._op_playSong = IcePy.Operation('playSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_int, False, 0),), (), None, ())
+    InterfaceMP3._op_stopSong = IcePy.Operation('stopSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (), (), None, ())
     InterfaceMP3._op_addTagSong = IcePy.Operation('addTagSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_int, False, 0), ((), IcePy._t_string, False, 0)), (), None, ())
     InterfaceMP3._op_removeTagSong = IcePy.Operation('removeTagSong', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_int, False, 0), ((), IcePy._t_string, False, 0)), (), None, ())
-    InterfaceMP3._op_shutdown = IcePy.Operation('shutdown', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (), (), None, ())
 
     _M_ArchDistrib.InterfaceMP3 = InterfaceMP3
     del InterfaceMP3

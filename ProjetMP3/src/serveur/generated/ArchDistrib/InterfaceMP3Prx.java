@@ -182,9 +182,9 @@ public interface InterfaceMP3Prx extends Ice.ObjectPrx
 
     public Song[] end_searchSongs(Ice.AsyncResult __result);
 
-    public float[] playSong(int id);
+    public void playSong(int id);
 
-    public float[] playSong(int id, java.util.Map<String, String> __ctx);
+    public void playSong(int id, java.util.Map<String, String> __ctx);
 
     public Ice.AsyncResult begin_playSong(int id);
 
@@ -199,26 +199,60 @@ public interface InterfaceMP3Prx extends Ice.ObjectPrx
     public Ice.AsyncResult begin_playSong(int id, java.util.Map<String, String> __ctx, Callback_InterfaceMP3_playSong __cb);
 
     public Ice.AsyncResult begin_playSong(int id, 
-                                          IceInternal.Functional_GenericCallback1<float[]> __responseCb, 
+                                          IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb);
 
     public Ice.AsyncResult begin_playSong(int id, 
-                                          IceInternal.Functional_GenericCallback1<float[]> __responseCb, 
+                                          IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
                                           IceInternal.Functional_BoolCallback __sentCb);
 
     public Ice.AsyncResult begin_playSong(int id, 
                                           java.util.Map<String, String> __ctx, 
-                                          IceInternal.Functional_GenericCallback1<float[]> __responseCb, 
+                                          IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb);
 
     public Ice.AsyncResult begin_playSong(int id, 
                                           java.util.Map<String, String> __ctx, 
-                                          IceInternal.Functional_GenericCallback1<float[]> __responseCb, 
+                                          IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
                                           IceInternal.Functional_BoolCallback __sentCb);
 
-    public float[] end_playSong(Ice.AsyncResult __result);
+    public void end_playSong(Ice.AsyncResult __result);
+
+    public void stopSong();
+
+    public void stopSong(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_stopSong();
+
+    public Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_stopSong(Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_stopSong(Callback_InterfaceMP3_stopSong __cb);
+
+    public Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx, Callback_InterfaceMP3_stopSong __cb);
+
+    public Ice.AsyncResult begin_stopSong(IceInternal.Functional_VoidCallback __responseCb, 
+                                          IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb);
+
+    public Ice.AsyncResult begin_stopSong(IceInternal.Functional_VoidCallback __responseCb, 
+                                          IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
+                                          IceInternal.Functional_BoolCallback __sentCb);
+
+    public Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx, 
+                                          IceInternal.Functional_VoidCallback __responseCb, 
+                                          IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb);
+
+    public Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx, 
+                                          IceInternal.Functional_VoidCallback __responseCb, 
+                                          IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
+                                          IceInternal.Functional_BoolCallback __sentCb);
+
+    public void end_stopSong(Ice.AsyncResult __result);
 
     public void addTagSong(int id, String name);
 
@@ -303,38 +337,4 @@ public interface InterfaceMP3Prx extends Ice.ObjectPrx
                                                IceInternal.Functional_BoolCallback __sentCb);
 
     public void end_removeTagSong(Ice.AsyncResult __result);
-
-    public void shutdown();
-
-    public void shutdown(java.util.Map<String, String> __ctx);
-
-    public Ice.AsyncResult begin_shutdown();
-
-    public Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx);
-
-    public Ice.AsyncResult begin_shutdown(Ice.Callback __cb);
-
-    public Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx, Ice.Callback __cb);
-
-    public Ice.AsyncResult begin_shutdown(Callback_InterfaceMP3_shutdown __cb);
-
-    public Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx, Callback_InterfaceMP3_shutdown __cb);
-
-    public Ice.AsyncResult begin_shutdown(IceInternal.Functional_VoidCallback __responseCb, 
-                                          IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb);
-
-    public Ice.AsyncResult begin_shutdown(IceInternal.Functional_VoidCallback __responseCb, 
-                                          IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
-                                          IceInternal.Functional_BoolCallback __sentCb);
-
-    public Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx, 
-                                          IceInternal.Functional_VoidCallback __responseCb, 
-                                          IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb);
-
-    public Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx, 
-                                          IceInternal.Functional_VoidCallback __responseCb, 
-                                          IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
-                                          IceInternal.Functional_BoolCallback __sentCb);
-
-    public void end_shutdown(Ice.AsyncResult __result);
 }

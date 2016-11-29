@@ -20,11 +20,6 @@
 
 package ArchDistrib;
 
-public abstract class Callback_InterfaceMP3_playSong
-    extends IceInternal.TwowayCallback implements Ice.TwowayCallbackArg1<float[]>
+public abstract class Callback_InterfaceMP3_playSong extends Ice.OnewayCallback
 {
-    public final void __completed(Ice.AsyncResult __result)
-    {
-        InterfaceMP3PrxHelper.__playSong_completed(this, __result);
-    }
 }
