@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.io.File;
 
 import ArchDistrib.Song;
 import ArchDistrib.Tag;
@@ -20,15 +21,43 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
     private Map<String, List<Song>> mapArtistSongs;
     private List<int[]> mapsIndexes;
 
+    // Map avec les IPs des clients et le player actuel
+    private Map<String, Player> mapClientsPlayers;
+
     public ServeurMP3I() {
         this.songs = new ArrayList<Song>();
         this.mapNameSongs = new HashMap<String, List<Song>>();
         this.mapArtistSongs = new HashMap<String, List<Song>>();
         this.mapsIndexes = new ArrayList<int[]>();
+
+        this.mapClientsPlayers = new HashMap<String, Player>();
+    }
+
+    private String getClientIP(Ice.Current current) {
+        String currentStr = current.con.toString();
+        String regex = ".*remote address = ([0-9.]+):[0-9]+";
+        Pattern p = Pattern.compile(regex, Pattern.MULTILINE);
+        Matcher m = p.matcher(currentStr);
+
+        if (m.find())
+            return m.group(1);
+        else
+          return "Inconnu";
+    }
+
+    private void log(Ice.Current current, String text, Object... vars) {
+        for (Object o : vars) {
+            try {
+              text = text.replaceFirst("\\?", o.toString());
+            }
+            catch (Exception ex) {}
+        }
+
+        System.out.println("<" + getClientIP(current) + ">\t" + text);
     }
 
 	  public void addSong(String name, String artist, String path, Ice.Current current) {
-        System.out.println("addSong name=" + name + "; artist=" + artist + "; path=" + path);
+        log(current, "addSong name=?; artist=?; path=?", name, artist, path);
         Song s = new Song();
         s.name = name;
         s.artist = artist;
@@ -68,7 +97,7 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
     }
 
     public void removeSong(int id, Ice.Current current) {
-        System.out.println("removeSong id=" + id);
+        log(current, "removeSong id=?", id);
 
         if (this.songs.size() >= id && this.songs.get(id-1) != null) {
             // Suppression de la liste de chansons
@@ -86,7 +115,7 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
     }
 
     public Song[] listSongs(Ice.Current current) {
-        System.out.println("listSongs");
+        log(current, "listSongs");
         List<Song> aux = new ArrayList<Song>();
         for (Song s : this.songs) {
             if (s != null)
@@ -114,7 +143,8 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
     }
 
     public Song[] searchSongs(String nameRegex, String artistRegex, Ice.Current current) {
-        System.out.println("searchSongs nameRegex=" + nameRegex + "; artistRegex=" + artistRegex);
+        log(current, "searchSongs nameRegex=?; artistRegex=?", nameRegex, artistRegex);
+
         List<Song> byName = this.searchRegexMap(this.mapNameSongs, nameRegex);
         List<Song> byArtist = this.searchRegexMap(this.mapArtistSongs, artistRegex);
         byName.retainAll(byArtist);
@@ -130,20 +160,59 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
         return byName.toArray(new Song[0]);
     }
 
-    public float[] playSong(int id, Ice.Current current) {
-        System.out.println("playSong id=" + id);
-        return null;
+    public void playSong(int id, Ice.Current current) {
+        log(current, "playSong id=?", id);
+
+        // On obtient la chanson a partir de l'id
+        if (id <= this.songs.size()) {
+            Song s = songs.get(id-1);
+            File f = new File(s.path);
+
+            // Si le fichier existe, on va le reproduire
+            if(f.exists() && !f.isDirectory()) {
+                String ip = getClientIP(current);
+
+                if (this.mapClientsPlayers.containsKey(ip)) {
+                    Player actuel = this.mapClientsPlayers.get(ip);
+                    if (actuel != null)
+                        actuel.stop();
+
+                    this.mapClientsPlayers.remove(ip);
+                }
+
+                Player player = new Player();
+                this.mapClientsPlayers.put(ip, player);
+
+                String mrl = s.path;
+                player.start(mrl, ip);
+
+                return;
+            }
+
+            log(current, "Fichier '" + s.path + "' non trouve");
+        }
+
+        log(current, "ID de chanson non trouve");
+    }
+
+    public void stopSong(Ice.Current current) {
+        log(current, "stopSong");
+
+        String ip = getClientIP(current);
+        if (this.mapClientsPlayers.containsKey(ip)) {
+            Player player = this.mapClientsPlayers.get(ip);
+            if (player != null)
+                player.stop();
+
+            this.mapClientsPlayers.remove(ip);
+        }
     }
 
     public void addTagSong(int id, String name, Ice.Current current) {
-        System.out.println("addTagSong id=" + id + "; name=" + name);
+        log(current, "addTagSong id=?; name=?", id, name);
     }
 
     public void removeTagSong(int id, String name, Ice.Current current) {
-        System.out.println("removeTagSong id=" + id + "; name=" + name);
-    }
-
-    public void shutdown(Ice.Current current) {
-        System.out.println("shutdown");
+        log(current, "removeTagSong id=?; name=?", id, name);
     }
 }

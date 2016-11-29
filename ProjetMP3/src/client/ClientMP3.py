@@ -14,8 +14,8 @@ def main():
             raise RuntimeError("Invalid proxy")
 
         # Client
-        #client = CLI.App(serveur)
-        client = GUI.App(serveur)
+        client = CLI.App(serveur)
+        #client = GUI.App(serveur)
 
         # Boucle principale
         client.mainloop()

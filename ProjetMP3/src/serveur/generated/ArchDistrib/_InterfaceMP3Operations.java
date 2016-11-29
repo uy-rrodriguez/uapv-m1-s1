@@ -30,11 +30,11 @@ public interface _InterfaceMP3Operations
 
     Song[] searchSongs(String nameRegex, String artistRegex, Ice.Current __current);
 
-    float[] playSong(int id, Ice.Current __current);
+    void playSong(int id, Ice.Current __current);
+
+    void stopSong(Ice.Current __current);
 
     void addTagSong(int id, String name, Ice.Current __current);
 
     void removeTagSong(int id, String name, Ice.Current __current);
-
-    void shutdown(Ice.Current __current);
 }

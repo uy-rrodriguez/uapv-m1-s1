@@ -22,11 +22,10 @@ module ArchDistrib {
         void removeSong(int id);
         SongSeq listSongs();
         SongSeq searchSongs(string nameRegex, string artistRegex);
-        DataSeq playSong(int id);
+        void playSong(int id);
+        void stopSong();
 
         void addTagSong(int id, string name);
         void removeTagSong(int id, string name);
-
-        void shutdown();
     };
 };

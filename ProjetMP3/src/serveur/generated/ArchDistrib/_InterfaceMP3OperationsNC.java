@@ -30,11 +30,11 @@ public interface _InterfaceMP3OperationsNC
 
     Song[] searchSongs(String nameRegex, String artistRegex);
 
-    float[] playSong(int id);
+    void playSong(int id);
+
+    void stopSong();
 
     void addTagSong(int id, String name);
 
     void removeTagSong(int id, String name);
-
-    void shutdown();
 }

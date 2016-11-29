@@ -85,9 +85,9 @@ public abstract class _InterfaceMP3Disp extends Ice.ObjectImpl implements Interf
         return listSongs(null);
     }
 
-    public final float[] playSong(int id)
+    public final void playSong(int id)
     {
-        return playSong(id, null);
+        playSong(id, null);
     }
 
     public final void removeSong(int id)
@@ -105,9 +105,9 @@ public abstract class _InterfaceMP3Disp extends Ice.ObjectImpl implements Interf
         return searchSongs(nameRegex, artistRegex, null);
     }
 
-    public final void shutdown()
+    public final void stopSong()
     {
-        shutdown(null);
+        stopSong(null);
     }
 
     public static Ice.DispatchStatus ___addSong(InterfaceMP3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
@@ -172,10 +172,17 @@ public abstract class _InterfaceMP3Disp extends Ice.ObjectImpl implements Interf
         int id;
         id = __is.readInt();
         __inS.endReadParams();
-        float[] __ret = __obj.playSong(id, __current);
-        IceInternal.BasicStream __os = __inS.__startWriteParams(Ice.FormatType.DefaultFormat);
-        DataSeqHelper.write(__os, __ret);
-        __inS.__endWriteParams(true);
+        __obj.playSong(id, __current);
+        __inS.__writeEmptyParams();
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus ___stopSong(InterfaceMP3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        __inS.readEmptyParams();
+        __obj.stopSong(__current);
+        __inS.__writeEmptyParams();
         return Ice.DispatchStatus.DispatchOK;
     }
 
@@ -207,15 +214,6 @@ public abstract class _InterfaceMP3Disp extends Ice.ObjectImpl implements Interf
         return Ice.DispatchStatus.DispatchOK;
     }
 
-    public static Ice.DispatchStatus ___shutdown(InterfaceMP3 __obj, IceInternal.Incoming __inS, Ice.Current __current)
-    {
-        __checkMode(Ice.OperationMode.Normal, __current.mode);
-        __inS.readEmptyParams();
-        __obj.shutdown(__current);
-        __inS.__writeEmptyParams();
-        return Ice.DispatchStatus.DispatchOK;
-    }
-
     private final static String[] __all =
     {
         "addSong",
@@ -229,7 +227,7 @@ public abstract class _InterfaceMP3Disp extends Ice.ObjectImpl implements Interf
         "removeSong",
         "removeTagSong",
         "searchSongs",
-        "shutdown"
+        "stopSong"
     };
 
     public Ice.DispatchStatus __dispatch(IceInternal.Incoming in, Ice.Current __current)
@@ -288,7 +286,7 @@ public abstract class _InterfaceMP3Disp extends Ice.ObjectImpl implements Interf
             }
             case 11:
             {
-                return ___shutdown(this, in, __current);
+                return ___stopSong(this, in, __current);
             }
         }
 

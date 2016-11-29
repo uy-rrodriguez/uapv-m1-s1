@@ -458,20 +458,19 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
 
     private static final String __playSong_name = "playSong";
 
-    public float[] playSong(int id)
+    public void playSong(int id)
     {
-        return playSong(id, null, false);
+        playSong(id, null, false);
     }
 
-    public float[] playSong(int id, java.util.Map<String, String> __ctx)
+    public void playSong(int id, java.util.Map<String, String> __ctx)
     {
-        return playSong(id, __ctx, true);
+        playSong(id, __ctx, true);
     }
 
-    private float[] playSong(int id, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    private void playSong(int id, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
-        __checkTwowayOnly(__playSong_name);
-        return end_playSong(begin_playSong(id, __ctx, __explicitCtx, true, null));
+        end_playSong(begin_playSong(id, __ctx, __explicitCtx, true, null));
     }
 
     public Ice.AsyncResult begin_playSong(int id)
@@ -505,14 +504,14 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
     }
 
     public Ice.AsyncResult begin_playSong(int id, 
-                                          IceInternal.Functional_GenericCallback1<float[]> __responseCb, 
+                                          IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb)
     {
         return begin_playSong(id, null, false, false, __responseCb, __exceptionCb, null);
     }
 
     public Ice.AsyncResult begin_playSong(int id, 
-                                          IceInternal.Functional_GenericCallback1<float[]> __responseCb, 
+                                          IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
                                           IceInternal.Functional_BoolCallback __sentCb)
     {
@@ -521,7 +520,7 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
 
     public Ice.AsyncResult begin_playSong(int id, 
                                           java.util.Map<String, String> __ctx, 
-                                          IceInternal.Functional_GenericCallback1<float[]> __responseCb, 
+                                          IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb)
     {
         return begin_playSong(id, __ctx, true, false, __responseCb, __exceptionCb, null);
@@ -529,7 +528,7 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
 
     public Ice.AsyncResult begin_playSong(int id, 
                                           java.util.Map<String, String> __ctx, 
-                                          IceInternal.Functional_GenericCallback1<float[]> __responseCb, 
+                                          IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
                                           IceInternal.Functional_BoolCallback __sentCb)
     {
@@ -540,18 +539,15 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
                                            java.util.Map<String, String> __ctx, 
                                            boolean __explicitCtx, 
                                            boolean __synchronous, 
-                                           IceInternal.Functional_GenericCallback1<float[]> __responseCb, 
+                                           IceInternal.Functional_VoidCallback __responseCb, 
                                            IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
                                            IceInternal.Functional_BoolCallback __sentCb)
     {
-        return begin_playSong(id, __ctx, __explicitCtx, __synchronous, 
-                              new IceInternal.Functional_TwowayCallbackArg1<float[]>(__responseCb, __exceptionCb, __sentCb)
-                                  {
-                                      public final void __completed(Ice.AsyncResult __result)
-                                      {
-                                          InterfaceMP3PrxHelper.__playSong_completed(this, __result);
-                                      }
-                                  });
+        return begin_playSong(id, 
+                              __ctx, 
+                              __explicitCtx, 
+                              __synchronous, 
+                              new IceInternal.Functional_OnewayCallback(__responseCb, __exceptionCb, __sentCb));
     }
 
     private Ice.AsyncResult begin_playSong(int id, 
@@ -560,7 +556,6 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
                                            boolean __synchronous, 
                                            IceInternal.CallbackBase __cb)
     {
-        __checkAsyncTwowayOnly(__playSong_name);
         IceInternal.OutgoingAsync __result = getOutgoingAsync(__playSong_name, __cb);
         try
         {
@@ -577,56 +572,9 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
         return __result;
     }
 
-    public float[] end_playSong(Ice.AsyncResult __iresult)
+    public void end_playSong(Ice.AsyncResult __iresult)
     {
-        IceInternal.OutgoingAsync __result = IceInternal.OutgoingAsync.check(__iresult, this, __playSong_name);
-        try
-        {
-            if(!__result.__wait())
-            {
-                try
-                {
-                    __result.throwUserException();
-                }
-                catch(Ice.UserException __ex)
-                {
-                    throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
-                }
-            }
-            IceInternal.BasicStream __is = __result.startReadParams();
-            float[] __ret;
-            __ret = DataSeqHelper.read(__is);
-            __result.endReadParams();
-            return __ret;
-        }
-        finally
-        {
-            if(__result != null)
-            {
-                __result.cacheMessageBuffers();
-            }
-        }
-    }
-
-    static public void __playSong_completed(Ice.TwowayCallbackArg1<float[]> __cb, Ice.AsyncResult __result)
-    {
-        ArchDistrib.InterfaceMP3Prx __proxy = (ArchDistrib.InterfaceMP3Prx)__result.getProxy();
-        float[] __ret = null;
-        try
-        {
-            __ret = __proxy.end_playSong(__result);
-        }
-        catch(Ice.LocalException __ex)
-        {
-            __cb.exception(__ex);
-            return;
-        }
-        catch(Ice.SystemException __ex)
-        {
-            __cb.exception(__ex);
-            return;
-        }
-        __cb.response(__ret);
+        __end(__iresult, __playSong_name);
     }
 
     private static final String __removeSong_name = "removeSong";
@@ -1059,103 +1007,103 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
         __cb.response(__ret);
     }
 
-    private static final String __shutdown_name = "shutdown";
+    private static final String __stopSong_name = "stopSong";
 
-    public void shutdown()
+    public void stopSong()
     {
-        shutdown(null, false);
+        stopSong(null, false);
     }
 
-    public void shutdown(java.util.Map<String, String> __ctx)
+    public void stopSong(java.util.Map<String, String> __ctx)
     {
-        shutdown(__ctx, true);
+        stopSong(__ctx, true);
     }
 
-    private void shutdown(java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    private void stopSong(java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
-        end_shutdown(begin_shutdown(__ctx, __explicitCtx, true, null));
+        end_stopSong(begin_stopSong(__ctx, __explicitCtx, true, null));
     }
 
-    public Ice.AsyncResult begin_shutdown()
+    public Ice.AsyncResult begin_stopSong()
     {
-        return begin_shutdown(null, false, false, null);
+        return begin_stopSong(null, false, false, null);
     }
 
-    public Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx)
     {
-        return begin_shutdown(__ctx, true, false, null);
+        return begin_stopSong(__ctx, true, false, null);
     }
 
-    public Ice.AsyncResult begin_shutdown(Ice.Callback __cb)
+    public Ice.AsyncResult begin_stopSong(Ice.Callback __cb)
     {
-        return begin_shutdown(null, false, false, __cb);
+        return begin_stopSong(null, false, false, __cb);
     }
 
-    public Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_shutdown(__ctx, true, false, __cb);
+        return begin_stopSong(__ctx, true, false, __cb);
     }
 
-    public Ice.AsyncResult begin_shutdown(Callback_InterfaceMP3_shutdown __cb)
+    public Ice.AsyncResult begin_stopSong(Callback_InterfaceMP3_stopSong __cb)
     {
-        return begin_shutdown(null, false, false, __cb);
+        return begin_stopSong(null, false, false, __cb);
     }
 
-    public Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx, Callback_InterfaceMP3_shutdown __cb)
+    public Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx, Callback_InterfaceMP3_stopSong __cb)
     {
-        return begin_shutdown(__ctx, true, false, __cb);
+        return begin_stopSong(__ctx, true, false, __cb);
     }
 
-    public Ice.AsyncResult begin_shutdown(IceInternal.Functional_VoidCallback __responseCb, 
+    public Ice.AsyncResult begin_stopSong(IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb)
     {
-        return begin_shutdown(null, false, false, __responseCb, __exceptionCb, null);
+        return begin_stopSong(null, false, false, __responseCb, __exceptionCb, null);
     }
 
-    public Ice.AsyncResult begin_shutdown(IceInternal.Functional_VoidCallback __responseCb, 
+    public Ice.AsyncResult begin_stopSong(IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
                                           IceInternal.Functional_BoolCallback __sentCb)
     {
-        return begin_shutdown(null, false, false, __responseCb, __exceptionCb, __sentCb);
+        return begin_stopSong(null, false, false, __responseCb, __exceptionCb, __sentCb);
     }
 
-    public Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx, 
+    public Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx, 
                                           IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb)
     {
-        return begin_shutdown(__ctx, true, false, __responseCb, __exceptionCb, null);
+        return begin_stopSong(__ctx, true, false, __responseCb, __exceptionCb, null);
     }
 
-    public Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx, 
+    public Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx, 
                                           IceInternal.Functional_VoidCallback __responseCb, 
                                           IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
                                           IceInternal.Functional_BoolCallback __sentCb)
     {
-        return begin_shutdown(__ctx, true, false, __responseCb, __exceptionCb, __sentCb);
+        return begin_stopSong(__ctx, true, false, __responseCb, __exceptionCb, __sentCb);
     }
 
-    private Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx, 
+    private Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx, 
                                            boolean __explicitCtx, 
                                            boolean __synchronous, 
                                            IceInternal.Functional_VoidCallback __responseCb, 
                                            IceInternal.Functional_GenericCallback1<Ice.Exception> __exceptionCb, 
                                            IceInternal.Functional_BoolCallback __sentCb)
     {
-        return begin_shutdown(__ctx, 
+        return begin_stopSong(__ctx, 
                               __explicitCtx, 
                               __synchronous, 
                               new IceInternal.Functional_OnewayCallback(__responseCb, __exceptionCb, __sentCb));
     }
 
-    private Ice.AsyncResult begin_shutdown(java.util.Map<String, String> __ctx, 
+    private Ice.AsyncResult begin_stopSong(java.util.Map<String, String> __ctx, 
                                            boolean __explicitCtx, 
                                            boolean __synchronous, 
                                            IceInternal.CallbackBase __cb)
     {
-        IceInternal.OutgoingAsync __result = getOutgoingAsync(__shutdown_name, __cb);
+        IceInternal.OutgoingAsync __result = getOutgoingAsync(__stopSong_name, __cb);
         try
         {
-            __result.prepare(__shutdown_name, Ice.OperationMode.Normal, __ctx, __explicitCtx, __synchronous);
+            __result.prepare(__stopSong_name, Ice.OperationMode.Normal, __ctx, __explicitCtx, __synchronous);
             __result.writeEmptyParams();
             __result.invoke();
         }
@@ -1166,9 +1114,9 @@ public final class InterfaceMP3PrxHelper extends Ice.ObjectPrxHelperBase impleme
         return __result;
     }
 
-    public void end_shutdown(Ice.AsyncResult __iresult)
+    public void end_stopSong(Ice.AsyncResult __iresult)
     {
-        __end(__iresult, __shutdown_name);
+        __end(__iresult, __stopSong_name);
     }
 
     /**
