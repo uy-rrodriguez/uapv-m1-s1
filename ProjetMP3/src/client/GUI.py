@@ -1,82 +1,15 @@
 # Thanks to http://stackoverflow.com/a/14368421 for the pygame lib already builted
 # Icons from https://www.iconfinder.com/iconsets/pictograms-vol-1
+
 import sys, os
 from sys import path as syspath
 syspath.append(os.path.join(os.path.dirname(__file__), "lib"))
 import pygame
 
+from gui import *
+
 COLOR_BACKGROUND = (6,19,25,0)
 FONT = None
-
-class WidgetCollection:
-  buttons = []
-  button_over = None
-
-  @staticmethod
-  def deactivate_all():
-    for b in WidgetCollection.buttons:
-      b.deactivate()
-
-  @staticmethod
-  def checkButtonClick(evtOnClick):
-    for b in WidgetCollection.buttons:
-      if b.is_active() and b.rect.collidepoint(evtOnClick.pos):
-        b.doClick()
-        return
-
-  @staticmethod
-  def checkMouseOverButton(evtMouseMotion):
-    b = WidgetCollection.button_over
-    if (b != None and b.is_active()
-        and not b.rect.collidepoint(evtMouseMotion.pos)):
-      WidgetCollection.button_over.doMouseOut()
-      WidgetCollection.button_over = None
-
-    for b in WidgetCollection.buttons:
-      if b.is_active() and b.rect.collidepoint(evtMouseMotion.pos):
-        b.doMouseOver()
-        WidgetCollection.button_over = b
-        return
-
-
-class MyWidget(pygame.sprite.Sprite):
-  def __init__(self, parent, img):
-    pygame.sprite.Sprite.__init__(self)
-    self.parent = parent
-    self.image = pygame.image.load(img).convert_alpha()
-    self.rect = self.image.get_rect()
-    self.active = False
-
-  def is_active(self):
-    return self.active
-
-  def activate(self):
-    self.active = True
-
-  def deactivate(self):
-    self.active = False
-
-  def repaint(self):
-    self.parent.screen.fill(COLOR_BACKGROUND, self.rect)
-    self.parent.screen.blit(self.image, (self.rect.x, self.rect.y))
-
-
-class Button(MyWidget):
-  def __init__(self, parent, img, clickCallback = lambda: "Not implemented"):
-    MyWidget.__init__(self, parent, img)
-    WidgetCollection.buttons.append(self)
-
-    self.doClick = clickCallback
-
-    self.label = self.parent.font_button.render(('CLICK!'), True, (255,255,255))
-    self.label_rect = self.label.get_rect()
-
-  def doMouseOver(self):
-    self.label_rect.center = self.rect.center
-    self.parent.screen.blit(self.label, self.label_rect)
-
-  def doMouseOut(self):
-    self.repaint()
 
 
 class App():
@@ -98,7 +31,7 @@ class App():
 
     # Main menu
     self.changeScreen(self.frameMainMenu)
-    self.changeScreen(self.frameSongList)
+    #self.changeScreen(self.frameSongList)
 
 
     # fond = pygame.image.load("background.jpg").convert()
@@ -141,18 +74,18 @@ class App():
     self.changeScreen(self.frameMainMenu)
 
   def createWidgets(self):
-    self.logo       = Button(self, "img/logo.png",    self.onClickLogo)
-    self.like       = Button(self, "img/heart.png")
-    self.songlist   = Button(self, "img/list.png",    self.onClickSongList)
-    self.melody     = Button(self, "img/melody.png")
-    self.pause      = Button(self, "img/pause.png")
-    self.play       = Button(self, "img/play.png")
-    self.power      = Button(self, "img/power.png",   self.onClickPower)
-    self.reloadlist = Button(self, "img/reload.png")
-    self.search     = Button(self, "img/search.png")
-    self.sound      = Button(self, "img/sound.png")
-    self.tags       = Button(self, "img/tags.png")
-    self.upload     = Button(self, "img/upload.png")
+    self.logo       = MyButton(self, "img/logo.png",    self.onClickLogo)
+    self.like       = MyButton(self, "img/heart.png")
+    self.songlist   = MyButton(self, "img/list.png",    self.onClickSongList)
+    self.melody     = MyButton(self, "img/melody.png")
+    self.pause      = MyButton(self, "img/pause.png")
+    self.play       = MyButton(self, "img/play.png")
+    self.power      = MyButton(self, "img/power.png",   self.onClickPower)
+    self.reloadlist = MyButton(self, "img/reload.png")
+    self.search     = MyButton(self, "img/search.png")
+    self.sound      = MyButton(self, "img/sound.png")
+    self.tags       = MyButton(self, "img/tags.png")
+    self.upload     = MyButton(self, "img/upload.png")
 
 
   '''

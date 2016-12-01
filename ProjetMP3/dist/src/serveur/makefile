@@ -22,3 +22,7 @@ build:
 
 run:
 	java -classpath "$(LIBS);classes" ServeurMP3
+
+clean:
+	cd classes; rm -r *; cd ..
+	cd generated; rm -r *; cd ..

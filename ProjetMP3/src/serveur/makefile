@@ -14,8 +14,6 @@ build:
 run:
 	java -classpath "$(LIBS);classes" ServeurMP3
 
-vlc-build:
-	javac -d classes -classpath "$(VLC_LIBS);$(VLC_MAIN_LIB)" TestVLC.java
-
-vlc-run:
-	java -classpath "$(VLC_LIBS);$(VLC_MAIN_LIB);classes" TestVLC
+clean:
+	cd classes; rm -r *; cd ..
+	cd generated; rm -r *; cd ..

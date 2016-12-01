@@ -3,3 +3,7 @@ build:
 
 run:
 	python ClientMP3.py
+
+clean:
+	rm -r "./ArchDistrib/"
+	rm *.pyc
