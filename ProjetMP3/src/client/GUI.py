@@ -197,4 +197,5 @@ class App():
   #  self.quitButton.grid()
 
 
-#App(None).mainloop()
+if __name__ == "__main__":
+    App(None).mainloop()

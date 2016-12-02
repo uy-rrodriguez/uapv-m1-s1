@@ -1,3 +1,5 @@
+# A voir : http://inventwithpython.com/blog/2012/10/30/creating-a-button-ui-module-for-pygame/
+
 from MyWidget import MyWidget
 from WidgetCollection import WidgetCollection
 
@@ -14,8 +16,10 @@ class MyButton(MyWidget):
     self.label_rect = self.label.get_rect()
 
   def doMouseOver(self):
+    pygame.mouse.set_cursor(*pygame.cursors.arrow)
     self.label_rect.center = self.rect.center
     self.parent.screen.blit(self.label, self.label_rect)
 
   def doMouseOut(self):
+    pygame.mouse.set_cursor(*pygame.cursors.arrow)
     self.repaint()
