@@ -5,5 +5,6 @@ run:
 	python ClientMP3.py
 
 clean:
+    rm InterfaceMP3_ice.py
 	rm -r "./ArchDistrib/"
 	rm *.pyc

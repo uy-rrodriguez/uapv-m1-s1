@@ -17,6 +17,3 @@ run:
 clean:
 	cd classes; rm -r *; cd ..
 	cd generated; rm -r *; cd ..
-
-vlc-run:
-	java -classpath "$(VLC_LIBS);$(VLC_MAIN_LIB);classes" TestVLC
