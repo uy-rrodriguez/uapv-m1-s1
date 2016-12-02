@@ -1,23 +1,22 @@
 import sys, traceback, Ice
 import ArchDistrib
-#import CLI
-import GUI
+import CLI
+#import GUI
 
 
 def main():
     status = 0
     ic = None
     try:
-        #ic = Ice.initialize(sys.argv)
-        #base = ic.stringToProxy("InterfaceMP3:default -p 10000")
-        #serveur = ArchDistrib.InterfaceMP3Prx.checkedCast(base)
-        #if not serveur:
-        #    raise RuntimeError("Invalid proxy")
+        ic = Ice.initialize(sys.argv)
+        base = ic.stringToProxy("InterfaceMP3:default -p 10000")
+        serveur = ArchDistrib.InterfaceMP3Prx.checkedCast(base)
+        if not serveur:
+            raise RuntimeError("Invalid proxy")
 
         # Client
-        #client = CLI.App(serveur)
+        client = CLI.App(serveur)
         #client = GUI.App(serveur)
-        client = GUI.App(None)
 
         # Boucle principale
         client.mainloop()
