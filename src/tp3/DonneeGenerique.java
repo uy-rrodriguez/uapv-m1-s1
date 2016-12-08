@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  *   Cette classe represente une donne contenue dans un ABR.
  *   C'est une classe generique qui va stocker une cle et la donnee elle meme.
  */
-class DonneeGenerique<T> implements Comparable {
+public class DonneeGenerique<T> implements Comparable {
     String cle;
     T valeur;
 
