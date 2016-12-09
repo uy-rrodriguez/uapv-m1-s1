@@ -10,16 +10,22 @@ class MyButton(MyWidget):
     MyWidget.__init__(self, parent, img)
     WidgetCollection.buttons.append(self)
 
+    # Ajout a la liste de widgets
+    #self.batch = self.parent.widgetBatch
+    #self.parent.widgetBatch.append(self)
+
     self.doClick = clickCallback
 
-    self.label = self.parent.font_button.render(('CLICK!'), True, (255,255,255))
-    self.label_rect = self.label.get_rect()
+    # self.label = self.parent.font_button.render(('CLICK!'), True, (255,255,255))
+    # self.label_rect = self.label.get_rect()
 
   def doMouseOver(self):
-    pygame.mouse.set_cursor(*pygame.cursors.arrow)
-    self.label_rect.center = self.rect.center
-    self.parent.screen.blit(self.label, self.label_rect)
+    pass
+    # pygame.mouse.set_cursor(*pygame.cursors.arrow)
+    # self.label_rect.center = self.rect.center
+    # self.parent.screen.blit(self.label, self.label_rect)
 
   def doMouseOut(self):
-    pygame.mouse.set_cursor(*pygame.cursors.arrow)
-    self.repaint()
+    pass
+    # pygame.mouse.set_cursor(*pygame.cursors.arrow)
+    # self.repaint()

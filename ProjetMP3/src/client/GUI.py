@@ -21,7 +21,7 @@ class App():
     self.screen = pygame.display.set_mode((400, 600))
 
     # Polices utilisees
-    self.font_button = pygame.font.SysFont('Arial', 14, 16)
+    self.font_button = pygame.font.Font('gui/FFF_Tusj.ttf', 14, 16)
 
     # On utilise "statique" une classe qui gere les controles (buttons, etc.)
     # WidgetCollection

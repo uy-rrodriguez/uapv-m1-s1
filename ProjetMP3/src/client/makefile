@@ -4,7 +4,13 @@ build:
 run:
 	python ClientMP3.py
 
+run-pyglet:
+	# set PYTHONPATH ~/Donnees_itinerantes/FAC/ArchDistrib/TPs/ProjetMP3/src/client/lib/pyglet/pyglet-1.2.4/:$(PYTHONPATH)
+	# export PYTHONPATH=lib/pyglet/pyglet-1.2.4/:$(PYTHONPATH)
+	# echo $$PYTHONPATH
+	python GUI_pyglet.py
+
 clean:
-    rm InterfaceMP3_ice.py
+	rm InterfaceMP3_ice.py
 	rm -r "./ArchDistrib/"
 	rm *.pyc
