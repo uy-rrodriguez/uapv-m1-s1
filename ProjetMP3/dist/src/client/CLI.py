@@ -10,10 +10,12 @@ class App:
 
   def mainloop(self):
     # Affichage menu d'options
+    print "\nClient demarre"
+    print "==============\n"
     self.menu()
 
     # Boucle pour lire commandes utilisateur
-    cmd = raw_input("Choisir une option : ")
+    cmd = raw_input("\nChoisir une option : ")
     while cmd != "0":
       try:
         if cmd == "1":
@@ -45,7 +47,7 @@ class App:
       #raw_input()
       print("="*80 + "\n")
       self.menu()
-      cmd = raw_input("Choisir une option : ")
+      cmd = raw_input("\nChoisir une option : ")
 
     # Fin while
 
@@ -86,7 +88,7 @@ class App:
         bytes = open(values["path"], "rb").read()
         self.srv.addSong(values["nom"], values["artiste"], bytes)
     else:
-        print "Le fichier '", values["path"], "' n'existe pas !\n"
+        print "\nLe fichier '", values["path"], "' n'existe pas !\n"
 
 
   def removeSong(self):
@@ -103,8 +105,15 @@ class App:
 
   def searchSongs(self):
     #print("searchSongs nameRegex=" + nameRegex + "; artistRegex=" + artistRegex)
-    values = self.askForParams(["nom", "artiste"])
-    songs = self.srv.searchSongs(values["nom"], values["artiste"])
+    values = self.askForParams(["nomRegex", "artisteRegex"])
+
+    if (values["nomRegex"] == ""):
+        values["nomRegex"] = ".*"
+
+    if (values["artisteRegex"] == ""):
+        values["artisteRegex"] = ".*"
+
+    songs = self.srv.searchSongs(values["nomRegex"], values["artisteRegex"])
     self.printSongList(songs)
 
 

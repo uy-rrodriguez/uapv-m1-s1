@@ -1,3 +1,5 @@
+all: build run
+
 build:
 	slice2py ../interface/InterfaceMP3.ice
 
@@ -13,3 +15,11 @@ run-pyglet:
 clean:
 	rm -r "./ArchDistrib/"
 	rm *.pyc
+
+dist:
+	cp "CLI.py" "../../dist/src/client/"
+	cp "ClientMP3.py" "../../dist/src/client/"
+	cp "makefile" "../../dist/src/client/"
+	cp "Player.py" "../../dist/src/client/"
+	cp "vlc.py" "../../dist/src/client/"
+	cp "../interface/InterfaceMP3.ice" "../../dist/src/interface/"

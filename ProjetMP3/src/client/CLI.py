@@ -10,10 +10,12 @@ class App:
 
   def mainloop(self):
     # Affichage menu d'options
+    print "\nClient demarre"
+    print "==============\n"
     self.menu()
 
     # Boucle pour lire commandes utilisateur
-    cmd = raw_input("Choisir une option : ")
+    cmd = raw_input("\nChoisir une option : ")
     while cmd != "0":
       try:
         if cmd == "1":
@@ -45,7 +47,7 @@ class App:
       #raw_input()
       print("="*80 + "\n")
       self.menu()
-      cmd = raw_input("Choisir une option : ")
+      cmd = raw_input("\nChoisir une option : ")
 
     # Fin while
 

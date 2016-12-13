@@ -7,7 +7,8 @@ else
 endif
 
 # Ice
-ICE_LIBS=lib/ice/Ice.jar
+ICE_LIBS=lib/ice/*
+#lib/ice/Ice.jar
 
 # Bibliotheques "binding" de VLC pour Java
 VLC_LIBS=lib/vlcj-3.10.1/*$(PATH_SEPARATOR)lib/slf4j-1.7.21/*
@@ -21,6 +22,8 @@ VLC_MAIN_LIB=lib/libvlc
 LIBS=$(ICE_LIBS)$(PATH_SEPARATOR)$(VLC_LIBS)$(PATH_SEPARATOR)$(VLC_MAIN_LIB)
 
 
+all: build run
+
 build:
 	slice2java --output-dir generated ../interface/InterfaceMP3.ice
 	javac -d classes -classpath "$(LIBS)" ServeurMP3.java ServeurMP3I.java Player.java generated/ArchDistrib/*.java
@@ -31,3 +34,9 @@ run:
 clean:
 	cd classes; rm -r *.class; cd ..
 	cd generated/ArchDistrib; rm -r *.java; cd ../..
+
+dist:
+	cp "makefile" "../../dist/src/serveur/"
+	cp "Player.java" "../../dist/src/serveur/"
+	cp "ServeurMP3.java" "../../dist/src/serveur/"
+	cp "ServeurMP3I.java" "../../dist/src/serveur/"

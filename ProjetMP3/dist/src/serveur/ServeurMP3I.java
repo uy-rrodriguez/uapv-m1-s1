@@ -102,12 +102,12 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
             indexes[0] = l.size() - 1;
 
             // Ajout dans le map par artiste pour simplifier la recherche
-            if (this.mapArtistSongs.containsKey(name)) {
-                l = this.mapArtistSongs.get(name);
+            if (this.mapArtistSongs.containsKey(artist)) {
+                l = this.mapArtistSongs.get(artist);
             }
             else {
                 l = new ArrayList<Song>();
-                this.mapArtistSongs.put(name, l);
+                this.mapArtistSongs.put(artist, l);
             }
 
             l.add(s);
