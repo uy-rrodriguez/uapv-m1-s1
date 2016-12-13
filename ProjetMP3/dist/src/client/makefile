@@ -14,6 +14,7 @@ run-pyglet:
 
 clean:
 	rm -r "./ArchDistrib/"
+	rm "InterfaceMP3_ice.py"
 	rm *.pyc
 
 dist:
