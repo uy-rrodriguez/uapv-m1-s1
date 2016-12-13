@@ -86,7 +86,7 @@ class App:
         bytes = open(values["path"], "rb").read()
         self.srv.addSong(values["nom"], values["artiste"], bytes)
     else:
-        print "Le fichier '", values["path"], "' n'existe pas !\n"
+        print "\nLe fichier '", values["path"], "' n'existe pas !\n"
 
 
   def removeSong(self):
@@ -103,8 +103,15 @@ class App:
 
   def searchSongs(self):
     #print("searchSongs nameRegex=" + nameRegex + "; artistRegex=" + artistRegex)
-    values = self.askForParams(["nom", "artiste"])
-    songs = self.srv.searchSongs(values["nom"], values["artiste"])
+    values = self.askForParams(["nomRegex", "artisteRegex"])
+
+    if (values["nomRegex"] == ""):
+        values["nomRegex"] = ".*"
+
+    if (values["artisteRegex"] == ""):
+        values["artisteRegex"] = ".*"
+
+    songs = self.srv.searchSongs(values["nomRegex"], values["artisteRegex"])
     self.printSongList(songs)
 
 

@@ -10,8 +10,9 @@ def main():
     try:
         # Configuration pour augmenter la taille des requetes,
         # afin de pouvoir envoyer une chanson entiere
+        #     10240 KB permet d'envoyer un grande chanson de 10 MB
         props = Ice.createProperties(sys.argv)
-        props.setProperty("Ice.MessageSizeMax", "7388079")
+        props.setProperty("Ice.MessageSizeMax", "10240")
         initData = Ice.InitializationData()
         initData.properties = props
 
