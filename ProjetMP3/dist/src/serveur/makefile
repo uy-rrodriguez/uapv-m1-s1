@@ -24,5 +24,5 @@ run:
 	java -classpath "$(LIBS);classes" ServeurMP3
 
 clean:
-	cd classes; rm -r *; cd ..
-	cd generated; rm -r *; cd ..
+	cd classes; rm -r *.class; cd ..
+	cd generated/ArchDistrib; rm -r *.java; cd ../..
