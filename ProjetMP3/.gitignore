@@ -1,0 +1,7 @@
+**/classes/**/*.class
+**/generated/**/*.java
+**/serveur/**/mp3
+
+*.pyc
+InterfaceMP3_ice.py
+**/ArchDistrib
