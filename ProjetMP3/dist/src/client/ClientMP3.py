@@ -8,7 +8,15 @@ def main():
     status = 0
     ic = None
     try:
-        ic = Ice.initialize(sys.argv)
+        # Configuration pour augmenter la taille des requetes,
+        # afin de pouvoir envoyer une chanson entiere
+        props = Ice.createProperties(sys.argv)
+        props.setProperty("Ice.MessageSizeMax", "7388079")
+        initData = Ice.InitializationData()
+        initData.properties = props
+
+        # Initialisation du serveur et Ice
+        ic = Ice.initialize(initData)
         base = ic.stringToProxy("InterfaceMP3:default -p 10000")
         serveur = ArchDistrib.InterfaceMP3Prx.checkedCast(base)
         if not serveur:
@@ -17,6 +25,7 @@ def main():
         # Client
         client = CLI.App(serveur)
         #client = GUI.App(serveur)
+        #client = GUI.App(None)
 
         # Boucle principale
         client.mainloop()

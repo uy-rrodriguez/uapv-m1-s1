@@ -11,6 +11,5 @@ run-pyglet:
 	python GUI_pyglet.py
 
 clean:
-	rm InterfaceMP3_ice.py
 	rm -r "./ArchDistrib/"
 	rm *.pyc

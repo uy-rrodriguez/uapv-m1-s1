@@ -10,11 +10,13 @@ import java.util.Comparator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.io.File;
+import java.io.FileOutputStream;
 
 import ArchDistrib.Song;
-import ArchDistrib.Tag;
 
 public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
+
+    private static final String MP3_PATH = "mp3/";
 
     private List<Song> songs;
     private Map<String, List<Song>> mapNameSongs;
@@ -42,13 +44,13 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
         if (m.find())
             return m.group(1);
         else
-          return "Inconnu";
+            return "Inconnu";
     }
 
     private void log(Ice.Current current, String text, Object... vars) {
         for (Object o : vars) {
             try {
-              text = text.replaceFirst("\\?", o.toString());
+                text = text.replaceFirst("\\?", o.toString());
             }
             catch (Exception ex) {}
         }
@@ -56,43 +58,64 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
         System.out.println("<" + getClientIP(current) + ">\t" + text);
     }
 
-	  public void addSong(String name, String artist, String path, Ice.Current current) {
+    public void addSong(String name, String artist, byte[] data, Ice.Current current) {
+
+        String path = MP3_PATH + artist + "-" + name;
+
         log(current, "addSong name=?; artist=?; path=?", name, artist, path);
-        Song s = new Song();
-        s.name = name;
-        s.artist = artist;
-        s.path = path;
-        s.id = this.songs.size() + 1;
 
-        // Ajout dans la liste de chansons
-        this.songs.add(s);
-        int indexes[] = new int[2];
-        this.mapsIndexes.add(indexes);
+        try {
+            // Creation ou reecriture du fichier
+            File f = new File(path);
+            if (f.exists()) {
+                f.delete();
+            }
 
-        // Ajout dans le map par nom pour simplifier la recherche
-        List<Song> l;
-        if (this.mapNameSongs.containsKey(name)) {
-            l = this.mapNameSongs.get(name);
+            // Ecriture du fichier a partir des bytes recus
+            FileOutputStream os = new FileOutputStream(f, false);
+            os.write(data);
+            os.close();
+
+            // Creation de la chanson en memoire
+            Song s = new Song();
+            s.name = name;
+            s.artist = artist;
+            s.path = path;
+            s.id = this.songs.size() + 1;
+
+            // Ajout dans la liste de chansons
+            this.songs.add(s);
+            int indexes[] = new int[2];
+            this.mapsIndexes.add(indexes);
+
+            // Ajout dans le map par nom pour simplifier la recherche
+            List<Song> l;
+            if (this.mapNameSongs.containsKey(name)) {
+                l = this.mapNameSongs.get(name);
+            }
+            else {
+                l = new ArrayList<Song>();
+                this.mapNameSongs.put(name, l);
+            }
+
+            l.add(s);
+            indexes[0] = l.size() - 1;
+
+            // Ajout dans le map par artiste pour simplifier la recherche
+            if (this.mapArtistSongs.containsKey(name)) {
+                l = this.mapArtistSongs.get(name);
+            }
+            else {
+                l = new ArrayList<Song>();
+                this.mapArtistSongs.put(name, l);
+            }
+
+            l.add(s);
+            indexes[1] = l.size() - 1;
         }
-        else {
-            l = new ArrayList<Song>();
-            this.mapNameSongs.put(name, l);
+        catch (Exception ex) {
+            log(current, "Erreur pour ajouter la chanson. ?", ex.getMessage());
         }
-
-        l.add(s);
-        indexes[0] = l.size() - 1;
-
-        // Ajout dans le map par artiste pour simplifier la recherche
-        if (this.mapArtistSongs.containsKey(name)) {
-            l = this.mapArtistSongs.get(name);
-        }
-        else {
-            l = new ArrayList<Song>();
-            this.mapArtistSongs.put(name, l);
-        }
-
-        l.add(s);
-        indexes[1] = l.size() - 1;
 
     }
 
@@ -111,6 +134,14 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
             // Suppression du map par nom et par artiste
             this.mapNameSongs.get(s.name).remove(indexes[0]);
             this.mapArtistSongs.get(s.artist).remove(indexes[1]);
+
+            // Suppression du fichier en disque
+            try {
+                File f = new File(s.path);
+                if (f.exists())
+                    f.delete();
+            }
+            catch (Exception e){}
         }
     }
 
@@ -151,11 +182,11 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
 
         // On doit ordonner les resultats
         Collections.sort(byName, new Comparator<Song>() {
-                @Override
-                public int compare(Song s1, Song s2) {
-                    return s1.id - s2.id;
-                }
-            });
+            @Override
+            public int compare(Song s1, Song s2) {
+                return s1.id - s2.id;
+            }
+        });
 
         return byName.toArray(new Song[0]);
     }
@@ -206,13 +237,5 @@ public class ServeurMP3I extends ArchDistrib._InterfaceMP3Disp {
 
             this.mapClientsPlayers.remove(ip);
         }
-    }
-
-    public void addTagSong(int id, String name, Ice.Current current) {
-        log(current, "addTagSong id=?; name=?", id, name);
-    }
-
-    public void removeTagSong(int id, String name, Ice.Current current) {
-        log(current, "removeTagSong id=?; name=?", id, name);
     }
 }

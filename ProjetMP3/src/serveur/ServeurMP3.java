@@ -3,6 +3,16 @@ public class ServeurMP3 {
         int status = 0;
         Ice.Communicator ic = null;
         try {
+            // Configuration de taille maximale pour les requetes
+            /*
+            Ice.StringSeqHolder argsH = new Ice.StringSeqHolder(args);
+            Ice.Properties properties = Ice.Util.createProperties(argsH);
+            properties.setProperty("Ice.MessageSizeMax", "7388079");
+            Ice.InitializationData id = new Ice.InitializationData();
+            id.properties = properties;
+            */
+
+            // Initialisation du serveur
             ic = Ice.Util.initialize(args);
             Ice.ObjectAdapter adapter =
                 ic.createObjectAdapterWithEndpoints("InterfaceMP3Adapter", "default -p 10000");

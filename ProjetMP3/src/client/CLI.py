@@ -1,3 +1,4 @@
+import os
 import traceback
 from Player import Player
 
@@ -33,13 +34,6 @@ class App:
         elif cmd == "6":
           self.stopSong()
 
-        #
-        #elif cmd == "7":
-        #  self.addTagSong()
-        #
-        #elif cmd == "8":
-        #  self.removeTagSong()
-
         else:
           print("Commande non reconnue")
         # Fin if-elif-else
@@ -58,14 +52,12 @@ class App:
 
   def menu(self):
     print("Options :")
-    print("1 - addSong \t\t : name artist path")
-    print("2 - removeSong \t\t : id")
-    print("3 - listSongs")
-    print("4 - searchSongs \t : nameRegex artistRegex")
-    print("5 - playSong \t\t : id")
-    print("6 - stopSong \t\t")
-    # print("7 - addTagSong \t\t : id name")
-    # print("8 - removeTagSong \t : id name")
+    print("1 - Ajouter chanson \t\t\t (name artist path)")
+    print("2 - Supprimer chanson \t\t\t (id)")
+    print("3 - Lister chansons")
+    print("4 - Chercher par expr. reguliere \t (nameRegex artistRegex)")
+    print("5 - Jouer chanson \t\t\t (id)")
+    print("6 - Arreter chanson \t\t")
     print("0 - Fermer le programme")
 
 
@@ -82,7 +74,6 @@ class App:
     print "\t\t".join(["ID", "Nom", "Artiste"])
     for s in songs:
       print "\t\t".join([str(s.id), s.name, s.artist])
-      #print "\t\t".join([str(s.id), s.name, s.artist, "[" + ", ".join(s.tags) + "]"])
 
     print "\n"
 
@@ -90,7 +81,12 @@ class App:
   def addSong(self):
     #print("addSong name=" + name + "; artist=" + artist + "; path=" + path)
     values = self.askForParams(["nom", "artiste", "path"])
-    self.srv.addSong(values["nom"], values["artiste"], values["path"])
+
+    if (os.path.isfile(values["path"])):
+        bytes = open(values["path"], "rb").read()
+        self.srv.addSong(values["nom"], values["artiste"], bytes)
+    else:
+        print "Le fichier '", values["path"], "' n'existe pas !\n"
 
 
   def removeSong(self):
@@ -139,16 +135,3 @@ class App:
 
     except Exception as e:
       pass
-
-
-  def addTagSong(self):
-    #print("addTagSong id=" + str(id) + "; name=" + name)
-    values = self.askForParams(["id", "name"])
-    self.srv.addTagSong(int(values["id"]), values["name"])
-
-
-  def removeTagSong(self):
-    #print("removeTagSong id=" + str(id) + "; name=" + name)
-    values = self.askForParams(["id", "name"])
-    self.srv.removeTagSong(int(values["id"]), values["name"])
-
