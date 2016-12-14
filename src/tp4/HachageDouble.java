@@ -1,6 +1,6 @@
 package tp4;
 
-public class HachageDouble<T> extends Hachage<T> {
+public class HachageDouble<T extends DonneeGenerique> extends Hachage<T> {
 	
 	private int k;
 	private boolean plein;
@@ -12,12 +12,12 @@ public class HachageDouble<T> extends Hachage<T> {
 	}
 
 	@Override
-	public int h(DonneeGenerique d) {
+	public int h(T d) {
 		return Math.abs(d.cle.hashCode()) % this.m;
 	}
 
 	@Override
-	public void add(DonneeGenerique d) {
+	public void add(T d) {
 		if (!this.plein) {
 			int h = this.h(d);
 			
@@ -34,7 +34,7 @@ public class HachageDouble<T> extends Hachage<T> {
 	}
 
 	@Override
-	public boolean recherche(DonneeGenerique d) {
+	public boolean recherche(T d) {
 		int h = this.h(d);
 		int i = 0;
 		boolean trouve = false;
@@ -42,7 +42,7 @@ public class HachageDouble<T> extends Hachage<T> {
 		while (i < m && !trouve) {
 			Object o = this.tableau[(h + k*i) % m];
 			if (o != null) {
-				DonneeGenerique<T> d2 = (DonneeGenerique) o;
+				T d2 = (T) o;
 				if (d.compareTo(d2) == 0)
 					trouve = true;
 			}
@@ -56,6 +56,29 @@ public class HachageDouble<T> extends Hachage<T> {
 			
 		return trouve;
 	}
+	
+	public T get(T d) {
+		int h = this.h(d);
+		int i = 0;
+		
+		while (i < m) {
+			Object o = this.tableau[(h + k*i) % m];
+			if (o != null) {
+				T d2 = (T) o;
+				if (d.compareTo(d2) == 0) {
+					return d2;
+				}
+			}
+			else
+				return null;	// On peut faire ceci parce qu'il n'y a pas de suppression.
+								// Il n'y a donc pas des cases vides entre la case h(d)
+								// et la position actuel de l'element d dans le tableau.
+								// Sinon il faudrait parcourir tout le tableau pour pouvoir
+								// dire qu'il n'existe pas.
+		}
+		
+		return null;
+	}
 
 	
 	public String toString() {
@@ -63,7 +86,7 @@ public class HachageDouble<T> extends Hachage<T> {
 		for (int i = 0; i < m; i++) {
 			Object o = this.tableau[i];
 			if (o != null) {
-				DonneeGenerique<T> d = (DonneeGenerique) o;
+				T d = (T) o;
 				buff.append(i + " : " + d + "\n");
 			}
 		}

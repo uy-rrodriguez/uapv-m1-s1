@@ -1,7 +1,7 @@
 package tp4;
 
 /* Remplacer "VotreStructureDeDonnees" par votre classe ABR ou une de vos classes de hachage */
-public class MyDataStructure extends HachageDouble<String> {
+public class MyDataStructure extends HachageDouble<DataKeyWord> {
 
 	public MyDataStructure(int m, int k) {
 		super(m, k);
@@ -13,7 +13,7 @@ public class MyDataStructure extends HachageDouble<String> {
 	 * @return The data of key <s> if any, null otherwise
 	 */
     public DataKeyWord get(String s) {
-		//TODO
+    	return super.get(new DataKeyWord(s));
 	 }
 	
 }

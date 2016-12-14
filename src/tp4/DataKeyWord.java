@@ -5,11 +5,28 @@ import java.util.List;
 
 public class DataKeyWord extends DonneeGenerique<String> {
 
-	List<String> pages; // Ensemble de pages où ce mot-clé est mentioné
+	private List<String> webpages; // Ensemble de pages où ce mot-clé est mentioné
 	
+	/*
+	 * Getters et Setters
+	 */
+	public List<String> getWebpages() {
+		return webpages;
+	}
+
+	public void setWebpages(List<String> webpages) {
+		this.webpages = webpages;
+	}
+
+	
+	/**
+	 * Constructeur
+	 * 
+	 * @param valeur
+	 */
 	public DataKeyWord(String valeur) {
 		super(valeur);
-		pages = new ArrayList<>();
+		webpages = new ArrayList<>();
 	}
 
 }

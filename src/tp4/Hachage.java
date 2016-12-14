@@ -9,7 +9,7 @@ public abstract class Hachage<T> {
 		this.tableau = new Object[m];
 	}
 
-	public abstract int h(DonneeGenerique<T> d);
-	public abstract void add(DonneeGenerique<T> d);
-	public abstract boolean recherche(DonneeGenerique<T> d);
+	public abstract int h(T d);
+	public abstract void add(T d);
+	public abstract boolean recherche(T d);
 }
